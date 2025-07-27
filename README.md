@@ -1,4 +1,4 @@
-土妹编程频道的各种思维导图资料
+土妹编程频道的各种ppt和思维导图资料
 
 Youtube频道：
 https://www.youtube.com/channel/UCu1lb_YUHcJFoc7lraETxvQ/
