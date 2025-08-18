@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google I/O China 2025 - AI 如何改变编程</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #34A853;
+            --accent-color: #FBBC05;
+            --danger-color: #EA4335;
+            --bg-color: #f0f2f5;
+            --text-color: #3c4043;
+            --light-text-color: #5f6368;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: var(--card-bg);
+            scroll-snap-align: start;
+            position: relative;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .slide:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .slide-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: var(--light-text-color);
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        h3 {
+            font-size: 2em;
+            color: var(--secondary-color);
+            font-weight: 500;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        p {
+            font-size: 1.1em;
+            max-width: 800px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-card h4 {
+            font-size: 1.4em;
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .diagram-placeholder {
+            border: 2px dashed var(--secondary-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            background-color: #e6f4ea;
+            color: var(--secondary-color);
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+        
+        .diagram-placeholder .title {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .info-card a {
+            display: block;
+            margin-top: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            text-align: right;
+        }
+
+        .info-card a:hover {
+            text-decoration: underline;
+        }
+
+        .chrome-ai-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .chrome-ai-diagram .column {
+            text-align: center;
+            width: 45%;
+        }
+
+        .chrome-ai-diagram .icon {
+            font-size: 3em;
+        }
+
+        .chrome-ai-diagram .vs {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--danger-color);
+        }
+
+        .diagram-grid {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .diagram-grid .grid-item {
+            flex: 1;
+            min-width: 120px;
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .grid-item .icon { font-size: 2.5em; }
+        .grid-item h5 { margin: 10px 0 5px 0; font-size: 1em; color: var(--text-color); }
+
+        .plus-icon {
+            font-size: 2em;
+            color: var(--primary-color);
+            align-self: center;
+        }
+
+        /* Simple Diagram Styles */
+        .flow-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        .flow-item {
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .flow-arrow {
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="slide-container">
+
+    <!-- 幻灯片 1: 开场 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Google I/O China 2025</h1>
+            <h2>开启下一代开发新纪元</h2>
+        </div>
+        <div class="diagram-placeholder">
+            <div class="title">Google I/O 2025 核心技术发布</div>
+            <div class="diagram-grid">
+                <div class="grid-item">
+                    <div class="icon">🧠</div>
+                    <h5>AI 与机器学习</h5>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">☁️</div>
+                    <h5>云与无服务器</h5>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📱</div>
+                    <h5>Web 与移动开发</h5>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">💾</div>
+                    <h5>数据与基础架构</h5>
+                </div>
+            </div>
+            <p>从云端到边缘设备，从开发工具到基础架构，Google 正在全方位注入 AI 能力，赋能全球开发者。</p>
+        </div>
+        <div class="slide-number">1 / 9</div>
+    </div>
+
+    <!-- 幻灯片 2: Google Cloud Assist -->
+    <div class="slide">
+        <div class="slide-header">
+            <h3>Google Cloud Assist：你的智能云管家</h3>
+        </div>
+        <div class="content-grid">
+            <div class="info-card">
+                <h4>这是什么？</h4>
+                <p>一个内嵌在 Google Cloud 里的 AI 助手。你不需要成为云专家，它会帮你管理和优化云资源，就像有位专家24小时待命。</p>
+                <ul>
+                    <li>自动发现潜在问题</li>
+                    <li>给出节省成本的建议</li>
+                    <li>帮你修复常见的故障</li>
+                </ul>
+                <a href="https://cloud.google.com/products/gemini/cloud-assist" target="_blank">了解更多 &rarr;</a>
+            </div>
+            <div class="diagram-placeholder">
+                <div class="title">Cloud Assist 工作流程</div>
+                <div class="flow-diagram">
+                    <div class="flow-item">🚨<br>问题发生<br>(例如: CPU过高)</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">🤖<br>Cloud Assist<br>分析与诊断</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">💡<br>解决方案<br>(例如: "建议更换实例类型")</div>
+                </div>
+                <p>Cloud Assist 把复杂的云运维变得像聊天一样简单。</p>
+            </div>
+        </div>
+        <div class="slide-number">2 / 9</div>
+    </div>
+    
+    <!-- 幻灯片 3: Agent Development Kit (ADK) -->
+    <div class="slide">
+        <div class="slide-header">
+            <h3>Agent Development Kit (ADK)：创建你专属的 AI 智能体</h3>
+        </div>
+        <div class="content-grid">
+            <div class="diagram-placeholder">
+                <div class="title">构建一个 AI 智能体</div>
+                 <div class="flow-diagram">
+                    <div class="flow-item">🧱<br>工具 (APIs)</div>
+                    <div class="flow-arrow">+</div>
+                    <div class="flow-item">🧠<br>大模型 (Gemini)</div>
+                    <div class="flow-arrow">+</div>
+                    <div class="flow-item">📝<br>指令</div>
+                    <div class="flow-arrow">=</div>
+                    <div class="flow-item">🤖✨<br>AI 智能体</div>
+                </div>
+                <p>ADK 提供所有必要的零件，让你轻松组装出能完成复杂任务的 AI 助手。</p>
+            </div>
+            <div class="info-card">
+                <h4>能做什么？</h4>
+                <p>这里的 ADK 不是安卓开发工具包，而是“智能体开发工具包”。用它来构建可以自动执行任务的程序，例如：</p>
+                <ul>
+                    <li>自动分析市场数据并生成报告</li>
+                    <li>智能客服，解答客户问题</li>
+                    <li>自动化寻找潜在客户</li>
+                </ul>
+                <a href="https://google.github.io/adk-docs/" target="_blank">了解更多 &rarr;</a>
+            </div>
+        </div>
+        <div class="slide-number">3 / 9</div>
+    </div>
+
+    <!-- 幻灯片 4: Chrome AI -->
+    <div class="slide">
+        <div class="slide-header">
+            <h3>Chrome AI：浏览器内置的 AI，更快、更安全</h3>
+        </div>
+        <div class="content-grid">
+            <div class="info-card">
+                <h4>有什么不同？</h4>
+                <p>传统的 AI 功能需要把你的数据发送到云端服务器处理。Chrome AI 直接在你自己的电脑上运行，这意味着：</p>
+                <ul>
+                    <li><strong>速度快：</strong>没有网络延迟，响应飞快。</li>
+                    <li><strong>更安全：</strong>你的数据不会离开电脑，隐私得到最大保护。</li>
+                    <li><strong>省成本：</strong>开发者无需承担高昂的服务器费用。</li>
+                </ul>
+                <a href="https://developer.chrome.com/docs/ai" target="_blank">了解更多 &rarr;</a>
+            </div>
+            <div class="diagram-placeholder">
+                <div class="title">本地 AI vs. 云端 AI</div>
+                <div class="chrome-ai-diagram">
+                    <div class="column">
+                        <div class="icon">💻 (Gemini Nano)</div>
+                        <h4>本地 AI (Chrome)</h4>
+                        <p>✅ 速度快<br>✅ 隐私安全<br>✅ 低成本</p>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="column">
+                        <div class="icon">☁️</div>
+                        <h4>云端 AI</h4>
+                        <p>❌ 网络延迟<br>❌ 数据需上传<br>❌ 依赖服务器</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">4 / 9</div>
+    </div>
+    
+    <!-- 幻灯片 5: Firebase Studio -->
+    <div class="slide">
+        <div class="slide-header">
+            <h3>Firebase Studio：AI 驱动的云端开发空间</h3>
+        </div>
+        <div class="content-grid">
+             <div class="diagram-placeholder">
+                <div class="title">一体化开发体验</div>
+                 <div class="flow-diagram">
+                    <div class="flow-item">👨‍💻<br>在浏览器中<br>写代码</div>
+                    <div class="flow-arrow">+</div>
+                    <div class="flow-item">🤖<br>AI 辅助<br>生成与调试</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">🚀<br>一键部署到<br>Firebase</div>
+                </div>
+                <p>从想法到上线，所有工作都在一个地方完成。</p>
+            </div>
+            <div class="info-card">
+                <h4>它是什么？</h4>
+                <p>一个在浏览器里就能完成所有开发的强大工具。它不仅仅是一个代码编辑器，更是一个集成了 Gemini AI 的完整工作台。</p>
+                <ul>
+                    <li><strong>AI 写代码：</strong>告诉 AI 你想做什么，它能帮你生成应用原型。</li>
+                    <li><strong>无需配置：</strong>打开浏览器就能用，不用花半天时间配环境。</li>
+                    <li><strong>轻松协作：</strong>把链接发给同事，就能一起实时写代码。</li>
+                </ul>
+                <a href="https://firebase.studio/" target="_blank">了解更多 &rarr;</a>
+            </div>
+        </div>
+        <div class="slide-number">5 / 9</div>
+    </div>
+
+    <!-- 幻灯片 6: Google Cloud Run -->
+    <div class="slide">
+        <div class="slide-header">
+            <h3>Google Cloud Run：AI 优化的无服务器平台</h3>
+        </div>
+        <div class="content-grid">
+            <div class="info-card">
+                <h4>核心理念：你写代码，我跑服务</h4>
+                <p>Cloud Run 是一个让你忘记服务器存在的平台。你只需要提供代码，它就能自动运行、扩展和管理。</p>
+                <p>现在，它还加入了 AI 驱动的优化：</p>
+                <ul>
+                    <li><strong>智能扩缩容：</strong>AI 预测流量，自动增减服务器，不多花一分冤枉钱。</li>
+                    <li><strong>冷启动优化：</strong>AI 减少应用首次启动的延迟。</li>
+                    <li><strong>原生支持GPU：</strong>为你的 AI/ML 模型提供强大的算力。</li>
+                </ul>
+                <a href="https://cloud.google.com/run" target="_blank">了解更多 &rarr;</a>
+            </div>
+            <div class="diagram-placeholder">
+                <div class="title">Cloud Run 智能扩缩容</div>
+                <div class="flow-diagram">
+                    <div class="flow-item">🌙<br>流量低谷<br>自动缩减至 0</div>
+                    <div class="flow-arrow">↔️</div>
+                    <div class="flow-item">☀️<br>流量高峰<br>自动扩展实例</div>
+                </div>
+                <p>AI 让无服务器变得更聪明、更高效。</p>
+            </div>
+        </div>
+        <div class="slide-number">6 / 9</div>
+    </div>
+    
+    <!-- 幻灯片 7: Google Spanner -->
+    <div class="slide">
+        <div class="slide-header">
+            <h3>Google Spanner：为 AI 时代设计的超级数据库</h3>
+        </div>
+        <div class="content-grid">
+            <div class="diagram-placeholder">
+                <div class="title">Spanner：一个数据库，多种用途</div>
+                <div class="diagram-grid">
+                    <div class="grid-item"><div class="icon">📊</div><h5>关系型</h5></div>
+                    <div class="grid-item"><div class="icon">🕸️</div><h5>图</h5></div>
+                    <div class="grid-item"><div class="icon">🔑</div><h5>键值</h5></div>
+                    <div class="grid-item"><div class="icon">🧭</div><h5>向量</h5></div>
+                </div>
+                 <p>一个数据库，满足你对 AI 应用数据存储的所有想象。</p>
+            </div>
+            <div class="info-card">
+                <h4>为什么是“超级”数据库？</h4>
+                <p>现代 AI 应用需要处理各种各样的数据，Spanner 正是为此而生。它不仅是传统的关系型数据库，还能处理：</p>
+                <ul>
+                    <li><strong>图数据：</strong>用于社交网络和推荐系统。</li>
+                    <li><strong>向量数据：</strong>AI 应用的核心，用于图片搜索、语义理解。</li>
+                    <li><strong>键值对：</strong>高速缓存和实时应用。</li>
+                </ul>
+                <p>它与 Vertex AI 无缝集成，为模型训练和推理提供最强的数据后盾。</p>
+                <a href="https://cloud.google.com/spanner" target="_blank">了解更多 &rarr;</a>
+            </div>
+        </div>
+        <div class="slide-number">7 / 9</div>
+    </div>
+
+    <!-- 幻灯片 8: Privacy Sandbox -->
+    <div class="slide">
+        <div class="slide-header">
+            <h3>Privacy Sandbox：兼顾隐私与创新的未来网络</h3>
+        </div>
+        <div class="content-grid">
+            <div class="info-card">
+                <h4>解决了什么矛盾？</h4>
+                <p>互联网公司需要了解用户兴趣来推送相关内容和广告，但这往往会牺牲用户隐私。Privacy Sandbox 的目标就是解决这个矛盾。</p>
+                <p>它提供了一套新技术，可以在不追踪单个用户的情况下，实现有效的广告和内容个性化。</p>
+                 <ul>
+                    <li><strong>保护用户：</strong>逐步淘汰第三方 Cookie。</li>
+                    <li><strong>赋能开发者：</strong>提供保护隐私的 API。</li>
+                </ul>
+                <a href="https://privacysandbox.google.com/" target="_blank">了解更多 &rarr;</a>
+            </div>
+            <div class="diagram-placeholder">
+                <div class="title">隐私沙盒工作原理</div>
+                 <div class="flow-diagram">
+                    <div class="flow-item">👤<br>用户</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item" style="border-color: var(--danger-color);">📦<br>沙盒<br>(数据匿名化)</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">🎯<br>群体兴趣<br>(而非个人)</div>
+                </div>
+                <p>既保护了每个人的隐私，又让数字生态系统能健康发展。</p>
+            </div>
+        </div>
+        <div class="slide-number">8 / 9</div>
+    </div>
+
+    <!-- 幻灯片 9: 总结 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>未来已来：AI 优先的开发新纪元</h1>
+            <h2>Google 正在全面拥抱 AI，赋能每一位开发者</h2>
+        </div>
+        <div class="content-grid">
+            <div class="info-card">
+                <h4>核心要点</h4>
+                <ul>
+                    <li><strong>AI 无处不在:</strong> 从浏览器到云端，AI 全程赋能。</li>
+                    <li><strong>开发更简单:</strong> AI 工具让开发效率指数级提升。</li>
+                    <li><strong>隐私更安全:</strong> 技术创新从源头保护用户数据。</li>
+                </ul>
+            </div>
+             <div class="info-card">
+                <h4>行动起来</h4>
+                <ul>
+                    <li>试用 <strong>Chrome AI</strong> 的新功能。</li>
+                    <li>在 <strong>Firebase Studio</strong> 中体验云端开发。</li>
+                    <li>用 <strong>Cloud Run</strong> 部署你的下一个应用。</li>
+                    <li>关注 <strong>Privacy Sandbox</strong> 的最新进展。</li>
+                </ul>
+            </div>
+        </div>
+         <p style="margin-top: 40px; font-size: 1.5em; text-align:center; color: var(--primary-color);"><strong>加入我们，一起用 AI 构建未来！</strong></p>
+        <div class="slide-number">9 / 9</div>
+    </div>
+
+</div>
+
+</body>
+</html>

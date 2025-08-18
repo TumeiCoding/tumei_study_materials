@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI编程思维转变：从编辑器到命令行</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 2rem;
+        }
+        .content-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .slide {
+            margin: 2rem 0;
+            padding: 4rem;
+            box-sizing: border-box;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        h1 {
+            font-size: 6rem; /* Drastically increased font size (Tailwind's text-8xl) */
+            font-weight: 800; 
+            margin-bottom: 1rem; 
+            line-height: 1.1;
+            /* Gradient text effect */
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        h2 {
+            font-size: 2.25rem; /* Increased subtitle size for balance (text-4xl) */
+            font-weight: 500;
+            color: #64748b; 
+            margin-bottom: 3rem; 
+        }
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+        .table-custom th, .table-custom td {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            text-align: left;
+        }
+        .table-custom th {
+            background-color: #f8fafc;
+            font-weight: 700;
+        }
+        .highlight {
+            color: #2563eb;
+            font-weight: 700;
+        }
+        .code-block {
+            background-color: #e2e8f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-family: monospace;
+            color: #334155;
+            margin: 0.5rem 0;
+            display: inline-block;
+            font-size: 0.9em;
+        }
+        .open-new-tab-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #1e40af;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 9999px;
+            border: none;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 100;
+            transition: background-color 0.2s;
+        }
+        .open-new-tab-btn:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="content-wrapper">
+        <!-- Section 1: Mindset Shift -->
+        <section class="slide">
+            <h1 class="text-center">🚀 思维转变：从编辑器AI到命令行</h1>
+            <h2 class="text-center">“全局上下文”的缺失 vs. “被动式”赋能</h2>
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>特性</th>
+                        <th class="bg-blue-100">传统编辑器AI (例如 Copilot)</th>
+                        <th class="bg-green-100">命令行AI (例如 Claude)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>交互模型</strong></td>
+                        <td>打开文件，选择代码，请求更改。</td>
+                        <td>从项目根目录通过指令进行对话。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>认知限制</strong></td>
+                        <td>缺乏全局上下文；仅限于当前文件或代码片段。</td>
+                        <td>构建全局意识；理解并操作整个项目。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>开发者参与</strong></td>
+                        <td>需要频繁的手动干预。</td>
+                        <td>“被迫”授权，提供更多信息和反馈。</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 text-center">
+                <div class="bg-red-100 p-4 rounded-lg">
+                    <h3 class="font-bold text-red-800 text-lg mb-2">核心问题</h3>
+                    <p>上下文同步困难；AI的理解与现实脱节。</p>
+                </div>
+                <div class="bg-green-100 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 text-lg mb-2">秘密武器</h3>
+                    <p>一个“原始”界面释放了AI的全部潜力：<span class="highlight">顶级模型 + 海量Token窗口</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Providing Context -->
+        <section class="slide">
+            <h1 class="text-center">📚 为Claude Code提供上下文</h1>
+            <h2 class="text-center">构建AI项目意识的三个上下文层次</h2>
+            <div class="space-y-6 text-xl">
+                <div class="p-6 bg-gray-100 rounded-lg shadow">
+                    <h3 class="font-bold text-2xl mb-2">1. 个人上下文</h3>
+                    <p class="code-block">~/.claude/claude.md</p>
+                    <p class="text-gray-600">定义您的个人偏好、常用库和代码风格。这会全局应用。</p>
+                </div>
+                <div class="p-6 bg-blue-100 rounded-lg shadow">
+                    <h3 class="font-bold text-2xl mb-2">2. 项目上下文</h3>
+                    <p class="code-block">&lt;project&gt;/claude.md</p>
+                    <p class="text-gray-600">项目的核心架构、关键模块和特殊约定。<span class="font-bold">必须检入代码库。</span></p>
+                </div>
+                <div class="p-6 bg-green-100 rounded-lg shadow">
+                    <h3 class="font-bold text-2xl mb-2">3. 文档化一切</h3>
+                    <p class="code-block">plans.md, analysis.txt, etc.</p>
+                    <p class="text-gray-600">将您的中间工作——计划、分析、图表和笔记——喂给AI，使其与您的思维过程保持一致。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Context Management -->
+        <section class="slide">
+            <h1 class="text-center">⚙️ 上下文管理</h1>
+            <h2 class="text-center">核心约束：像管理内存一样管理200k上下文窗口</h2>
+            <div class="mt-4 p-4 bg-red-100 border-l-4 border-red-500 rounded">
+                <p class="font-bold text-red-800">痛点：</p>
+                <p>上下文是稀缺资源，很容易耗尽。自动压缩可能会让AI感到困惑并导致信息丢失。</p>
+            </div>
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">🎯 分解任务 (关键)</h3>
+                    <p>在计划模式下，将大任务分解为小步骤。将计划文档化，以便新会话可以轻松接手。</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">🤖 使用子代理</h3>
+                    <p>为代码分析、审查和测试创建具有隔离上下文的子代理，以分离关注点。</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">🧹 手动压缩 (/compact)</h3>
+                    <p>在自然断点（例如，功能完成后）主动运行此命令，以保留核心信息并避免任务中混淆。</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">⚡ 开始新会话 (/clear)</h3>
+                    <p>在处理相对独立的任务时，不要犹豫，重新开始以避免无关的上下文。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Planning -->
+        <section class="slide">
+            <h1 class="text-center">🗺️ 规划：两种哲学</h1>
+            <h2 class="text-center">计划模式：先计划还是先行动？</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                <div class="border-2 border-blue-500 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-center">🧐 规划者</h3>
+                    <p><strong>方法：</strong>在编写代码之前，在计划模式下与AI讨论架构和实现细节。</p>
+                    <p><strong>最适合：</strong>维护具有特定架构的现有项目的有经验的开发人员。</p>
+                    <p><strong>好处：</strong><span class="text-green-600 font-bold">保持控制，实现更高的代码质量。</span></p>
+                </div>
+                <div class="border-2 border-purple-500 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-center">💪 强力推进者</h3>
+                    <p><strong>方法：</strong>让AI立即实现功能，并通过错误和反馈进行迭代。</p>
+                    <p><strong>最适合：</strong>探索新技术栈或原型设计思想以获得快速验证。</p>
+                    <p><strong>好处：</strong><span class="text-green-600 font-bold">快速行动，迅速看到结果。</span></p>
+                </div>
+            </div>
+            <div class="mt-8 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded">
+                <p><strong class="text-yellow-800">计划模式的隐藏好处：</strong>就像“小黄鸭调试法”一样，与AI对话的过程本身就是一种整理思路和发现盲点的方式。</p>
+            </div>
+        </section>
+
+        <!-- Section 5: Small Commits -->
+        <section class="slide">
+            <h1 class="text-center">👣 提交策略：两种节奏</h1>
+            <h2 class="text-center">控制是效率的前提</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                <div class="bg-red-100 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-red-700 mb-2">❌ “随它去”的噩梦</h3>
+                    <p>我曾经尝试让AI一次重构7-8个文件。结果是一个“修复bug→引入新bug”的无限循环，最终以强制<code class="bg-red-200 px-2 py-1 rounded">git reset</code>结束。</p>
+                    <div class="mt-4">
+                        <h4 class="font-bold">如果必须这样做，请确保：</h4>
+                        <ul class="list-disc list-inside mt-2">
+                            <li>首先使用TDD：让AI编写测试。</li>
+                            <li>使用版本控制：准备好回滚。</li>
+                            <li>交叉审查：让另一个AI审查代码。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-green-100 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-green-700 mb-2">✅ 强烈推荐：小步迭代</h3>
+                    <ul class="space-y-3">
+                        <li><strong>高可控性：</strong>易于定位问题和回滚。</li>
+                        <li><strong>易于理解：</strong>您可以跟随AI的逻辑而不会失去控制。</li>
+                        <li><strong>质量保证：</strong>您可以在每一步之后进行测试和验证。</li>
+                        <li><strong>学习机会：</strong>观察AI的实现以提高自己的技能。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Homework -->
+        <section class="slide">
+            <h1 class="text-center">🎓 作业：付诸实践</h1>
+            <h2 class="text-center">是时候动手体验命令行AI了。</h2>
+            <div class="mt-10 max-w-4xl mx-auto space-y-6">
+                <!-- Task 1 -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex items-start space-x-6 hover:border-blue-300 hover:bg-white transition-all">
+                    <div class="bg-blue-500 text-white rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center text-lg font-bold">1</div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-slate-800">设置个人上下文</h3>
+                        <p class="text-slate-600 mt-1">将您的个人编码风格、首选库和通用说明添加到您的全局上下文文件中。</p>
+                        <code class="code-block mt-2">~/.claude/claude.md</code>
+                    </div>
+                </div>
+                <!-- Task 2 -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex items-start space-x-6 hover:border-blue-300 hover:bg-white transition-all">
+                    <div class="bg-blue-500 text-white rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center text-lg font-bold">2</div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-slate-800">初始化一个项目</h3>
+                        <p class="text-slate-600 mt-1">导航到项目目录，让AI为您生成一个特定于项目的上下文文件。</p>
+                        <code class="code-block mt-2">/init</code>
+                    </div>
+                </div>
+                <!-- Task 3 -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex items-start space-x-6 hover:border-blue-300 hover:bg-white transition-all">
+                    <div class="bg-blue-500 text-white rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center text-lg font-bold">3</div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-slate-800">记录业务流程</h3>
+                        <p class="text-slate-600 mt-1">让Claude解释您项目中的一个业务流程，然后保存解释以备将来参考。</p>
+                    </div>
+                </div>
+                <!-- Task 4 -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex items-start space-x-6 hover:border-blue-300 hover:bg-white transition-all">
+                    <div class="bg-blue-500 text-white rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center text-lg font-bold">4</div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-slate-800">使用计划模式</h3>
+                        <p class="text-slate-600 mt-1">开始一个新的对话，并在计划模式下与Claude交谈，以在实现之前勾勒出新功能的大纲。</p>
+                        <code class="code-block mt-2">Shift + Tab</code>
+                    </div>
+                </div>
+                <!-- Task 5 -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex items-start space-x-6 hover:border-blue-300 hover:bg-white transition-all">
+                    <div class="bg-blue-500 text-white rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center text-lg font-bold">5</div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-slate-800">管理上下文</h3>
+                        <p class="text-slate-600 mt-1">练习在完成子任务后使用 <code class="code-block">/compact</code>，并在开始新的不相关任务时使用 <code class="code-block">/clear</code>。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <button class="open-new-tab-btn" onclick="openInNewTab()">在新标签页中打开</button>
+
+    <script>
+        // This script handles opening the page content in a new tab.
+        function openInNewTab() {
+            // Get the entire HTML content of the current page
+            const pageHTML = document.documentElement.outerHTML;
+            
+            // Open a new blank tab
+            const newTab = window.open('', '_blank');
+            
+            // Write the HTML content to the new tab
+            newTab.document.open();
+            newTab.document.write(pageHTML);
+            newTab.document.close();
+        }
+    </script>
+
+</body>
+</html>
