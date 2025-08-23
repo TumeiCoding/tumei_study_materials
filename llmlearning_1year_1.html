@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用LLM构建成功产品的实用指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Custom styles for section separators */
+        .section-divider {
+            border: 0;
+            height: 2px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen py-12 px-4">
+
+    <!-- Main Content Container -->
+    <main class="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
+        
+        <!-- Section 1: Title -->
+        <section class="p-8 md:p-16 flex flex-col justify-center items-center text-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">用大语言模型构建成功产品</h1>
+            <p class="text-2xl md:text-3xl font-light">一份实用指南</p>
+            <div class="mt-8 text-lg bg-black bg-opacity-20 px-4 py-2 rounded-lg">经验与教训</div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 2: Core Idea -->
+        <section class="p-8 md:p-12 flex flex-col justify-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">核心观点：入门易，精通难</h2>
+            <p class="text-lg md:text-xl text-gray-600 mb-8 text-center max-w-3xl mx-auto">虽然用 LLM 制作一个简单的演示（Demo）很容易，但要构建一个真正好用、可靠、可扩展的商业产品却充满挑战。</p>
+            <div class="flex flex-col md:flex-row items-center justify-around w-full">
+                <div class="text-center p-6 rounded-lg bg-green-50 border border-green-200 w-full md:w-2/5 mb-4 md:mb-0">
+                    <h3 class="text-xl font-semibold text-green-700">简单演示 (Demo)</h3>
+                    <p class="text-gray-600 mt-2">快速、直观、令人惊艳</p>
+                    <div class="text-5xl mt-4">😊</div>
+                </div>
+                <div class="text-4xl font-bold text-gray-400 mx-4 hidden md:block">&rarr;</div>
+                 <div class="text-4xl font-bold text-gray-400 my-4 md:hidden">&darr;</div>
+                <div class="text-center p-6 rounded-lg bg-red-50 border border-red-200 w-full md:w-2/5">
+                    <h3 class="text-xl font-semibold text-red-700">商业产品 (Product)</h3>
+                    <p class="text-gray-600 mt-2">可靠、可维护、有价值</p>
+                    <div class="text-5xl mt-4">🤯</div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 3: Structure -->
+        <section class="p-8 md:p-12 flex flex-col justify-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">指南结构：三个层次</h2>
+            <div class="flex flex-col md:flex-row justify-around space-y-6 md:space-y-0 md:space-x-6">
+                <div class="flex-1 bg-blue-50 p-6 rounded-lg shadow-sm text-center">
+                    <div class="text-4xl mb-3">🛠️</div>
+                    <h3 class="text-xl font-bold text-blue-800">战术 (Tactical)</h3>
+                    <p class="text-gray-600 mt-2">面向开发者，聚焦具体技巧，如提示词、RAG、评测等。</p>
+                </div>
+                <div class="flex-1 bg-yellow-50 p-6 rounded-lg shadow-sm text-center">
+                    <div class="text-4xl mb-3">📈</div>
+                    <h3 class="text-xl font-bold text-yellow-800">运营 (Operational)</h3>
+                    <p class="text-gray-600 mt-2">面向负责人，关注团队管理、产品发布、日常运营。</p>
+                </div>
+                <div class="flex-1 bg-purple-50 p-6 rounded-lg shadow-sm text-center">
+                    <div class="text-4xl mb-3">♟️</div>
+                    <h3 class="text-xl font-bold text-purple-800">战略 (Strategic)</h3>
+                    <p class="text-gray-600 mt-2">面向决策者，探讨长期愿景、技术选型、系统思维。</p>
+                </div>
+            </div>
+        </section>
+        
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 4: Tactical Intro (Prompting) -->
+        <section class="p-8 md:p-12 flex flex-col justify-center items-center text-center bg-blue-50">
+             <div class="text-5xl mb-4">🛠️</div>
+            <h2 class="text-3xl md:text-4xl font-bold text-blue-800">战术篇 (1): 提示词工程 (Prompting)</h2>
+            <p class="text-lg md:text-xl text-gray-700 mt-6 max-w-3xl">
+                提示词的作用常被<span class="font-semibold text-green-600">低估</span>（技巧很强大），也常被<span class="font-semibold text-red-600">高估</span>（仅靠提示词不够，需要大量工程支持）。
+            </p>
+        </section>
+
+        <!-- Section 5: Best Practice 1 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">最佳实践 1：用好基础提示技巧</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">精通基础技巧，比追求花哨技巧更重要。</p>
+            <div class="space-y-6 max-w-2xl mx-auto">
+                <div class="flex items-start"><div class="bg-indigo-100 text-indigo-700 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4 flex-shrink-0">1</div><div><h3 class="font-semibold text-xl text-indigo-800">N-shot 提示</h3><p class="text-gray-600">提供足够多（建议≥5个）且有代表性的范例。</p></div></div>
+                <div class="flex items-start"><div class="bg-indigo-100 text-indigo-700 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4 flex-shrink-0">2</div><div><h3 class="font-semibold text-xl text-indigo-800">思维链</h3><p class="text-gray-600">引导模型“一步步思考”，并给出具体步骤，能显著减少幻觉。</p></div></div>
+                <div class="flex items-start"><div class="bg-indigo-100 text-indigo-700 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4 flex-shrink-0">3</div><div><h3 class="font-semibold text-xl text-indigo-800">提供相关资料 (RAG)</h3><p class="text-gray-600">通过检索增强生成，提供背景知识，并要求模型参考作答。</p></div></div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 6: Best Practice 2 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">最佳实践 2：结构化输入与输出</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">结构化是提升可靠性的关键。</p>
+            <div class="flex flex-col md:flex-row gap-6 max-w-4xl mx-auto">
+                <div class="flex-1 p-6 bg-gray-50 rounded-lg border"><h3 class="font-semibold text-xl text-gray-700 mb-3">结构化输入</h3><p class="text-gray-600 mb-4">使用 JSON, XML 等格式帮助模型理解任务。</p><pre class="bg-gray-800 text-white p-3 rounded-md text-sm overflow-x-auto"><code>&lt;query&gt;...&lt;/query&gt;</code></pre></div>
+                <div class="flex-1 p-6 bg-gray-50 rounded-lg border"><h3 class="font-semibold text-xl text-gray-700 mb-3">结构化输出</h3><p class="text-gray-600 mb-4">强制模型按指定格式（如 JSON）输出。</p><pre class="bg-gray-800 text-white p-3 rounded-md text-sm overflow-x-auto"><code>{ "summary": "..." }</code></pre></div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 7: Best Practice 3 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">最佳实践 3：保持提示词的“单一职责”</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">像软件工程一样，将复杂任务拆分成简单、专一的提示词链条。</p>
+            <div class="flex flex-col items-center">
+                <div class="w-full max-w-lg mb-8"><h3 class="font-semibold text-xl text-red-600 text-center mb-2">避免：“上帝提示词”</h3><div class="bg-red-100 border-2 border-red-300 rounded-lg p-4 text-center shadow-md">一个试图做所有事情的复杂提示词</div></div>
+                <div class="text-5xl text-gray-400 mb-8">&darr;</div>
+                <div class="w-full"><h3 class="font-semibold text-xl text-green-600 text-center mb-2">推荐：任务链</h3><div class="flex flex-wrap justify-center items-center gap-2 text-sm md:text-base"><div class="bg-green-100 border border-green-300 rounded-lg p-3 text-center shadow">提取要点</div><div class="font-bold text-green-600">&rarr;</div><div class="bg-green-100 border border-green-300 rounded-lg p-3 text-center shadow">检查事实</div><div class="font-bold text-green-600">&rarr;</div><div class="bg-green-100 border border-green-300 rounded-lg p-3 text-center shadow">生成摘要</div></div></div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 8: Best Practice 4 -->
+        <section class="p-8 md:p-12 flex flex-col justify-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">最佳实践 4：精心打磨上下文</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">上下文并非越多越好，而是越精炼、越清晰越好。“少即是多”。</p>
+            <div class="flex items-center justify-center bg-gray-50 p-6 rounded-lg"><div class="text-6xl mr-4 md:mr-8">📜</div><div class="text-5xl text-gray-300 mr-4 md:mr-8">&rarr;</div><div class="text-6xl mr-4 md:mr-8">🗑️</div><div class="text-5xl text-gray-300 mr-4 md:mr-8">&rarr;</div><div class="text-6xl">💎</div></div>
+            <div class="mt-8 text-center"><h3 class="font-semibold text-xl text-gray-700">实用技巧</h3><p class="text-gray-600 mt-2 max-w-2xl mx-auto">将最终要发送给模型的完整内容打印出来，像人一样通读一遍，剔除冗余和矛盾。</p></div>
+        </section>
+        
+        <hr class="section-divider my-12 md:my-16">
+
+
+        <!-- Section 9: Prompting Summary -->
+        <section class="p-8 md:p-12 flex flex-col justify-center items-center bg-gray-800 text-white">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">战术篇 (提示词工程): 核心观点回顾</h2>
+            <ul class="space-y-4 text-xl md:text-2xl list-none text-left max-w-2xl">
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>精通基础技巧比追求花哨技巧更重要。</span></li>
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>结构化是可靠性的关键。</span></li>
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>拆分优于聚合，构建简单的任务链。</span></li>
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>上下文“少即是多”，必须精炼和审视。</span></li>
+            </ul>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 10: Tactical Intro (RAG) -->
+        <section class="p-8 md:p-12 flex flex-col justify-center items-center text-center bg-cyan-50">
+             <div class="text-5xl mb-4">🔎</div>
+            <h2 class="text-3xl md:text-4xl font-bold text-cyan-800">战术篇 (2): 检索增强生成 (RAG)</h2>
+            <p class="text-lg md:text-xl text-gray-700 mt-6 max-w-3xl">
+                RAG 是为 LLM "注入" 新知识<span class="font-semibold text-cyan-700">性价比最高</span>的方式。其核心是在提问时，先从知识库中检索相关文档作为上下文，再让模型回答。
+            </p>
+        </section>
+
+        <!-- Section 11: RAG Viewpoint 1 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 1：RAG 的效果取决于检索质量</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">RAG 系统的瓶颈在于检索出的文档质量。评估有三个维度：</p>
+            <div class="flex flex-col md:flex-row justify-around space-y-6 md:space-y-0 md:space-x-6 max-w-4xl mx-auto">
+                <div class="flex-1 text-center p-6 bg-gray-50 rounded-lg border"><div class="text-3xl mb-2">🎯</div><h3 class="font-semibold text-xl text-gray-700">相关性</h3><p class="text-gray-600 mt-2">内容是否真的和问题相关？</p></div>
+                <div class="flex-1 text-center p-6 bg-gray-50 rounded-lg border"><div class="text-3xl mb-2">💧</div><h3 class="font-semibold text-xl text-gray-700">信息密度</h3><p class="text-gray-600 mt-2">内容是否简洁精炼，没有噪音？</p></div>
+                <div class="flex-1 text-center p-6 bg-gray-50 rounded-lg border"><div class="text-3xl mb-2">📚</div><h3 class="font-semibold text-xl text-gray-700">细节水平</h3><p class="text-gray-600 mt-2">是否提供了足够丰富的细节？</p></div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 12: RAG Viewpoint 2 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 2：别忘了传统的“关键词搜索”</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">最佳实践是采用混合搜索，取长补短。</p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                <div class="w-full md:w-2/5 p-6 border-2 border-blue-300 rounded-lg bg-blue-50 text-center">
+                    <h3 class="text-xl font-bold text-blue-800">向量搜索</h3>
+                    <p class="mt-2">理解语义和概念</p>
+                    <p class="mt-1 text-sm text-gray-500">“关于AI的伦理问题”</p>
+                </div>
+                <div class="text-4xl font-bold text-gray-400 my-2 md:my-0">+</div>
+                <div class="w-full md:w-2/5 p-6 border-2 border-green-300 rounded-lg bg-green-50 text-center">
+                    <h3 class="text-xl font-bold text-green-800">关键词搜索</h3>
+                    <p class="mt-2">精确匹配专有名词/ID</p>
+                    <p class="mt-1 text-sm text-gray-500">“BM25算法”</p>
+                </div>
+            </div>
+             <div class="text-center mt-6">
+                <div class="text-4xl font-bold text-gray-400 my-2">&darr;</div>
+                <div class="inline-block p-6 border-2 border-purple-300 rounded-lg bg-purple-100 text-center">
+                    <h3 class="text-xl font-bold text-purple-800">混合搜索 (Hybrid Search)</h3>
+                    <p class="mt-2">精确性 + 语义理解 = 更鲁棒的检索</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 13: RAG Viewpoint 3 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 3：对于新知识，优先选择 RAG</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">相比微调 (Finetuning)，RAG 在注入新知识方面优势明显。</p>
+            <div class="overflow-x-auto max-w-3xl mx-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="border-b-2 p-4 text-lg">特性</th>
+                            <th class="border-b-2 p-4 text-lg text-cyan-700 bg-cyan-50 rounded-t-lg">RAG</th>
+                            <th class="border-b-2 p-4 text-lg text-orange-700">微调 (Finetuning)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-50"><td class="border-b p-4 font-semibold">效果</td><td class="border-b p-4 text-green-600">通常更优</td><td class="border-b p-4">特定任务强</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="border-b p-4 font-semibold">成本与效率</td><td class="border-b p-4 text-green-600">低 / 快</td><td class="border-b p-4 text-red-600">高 / 慢</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="border-b p-4 font-semibold">可控性</td><td class="border-b p-4 text-green-600">灵活，可即时增删</td><td class="border-b p-4 text-red-600">难，需重新训练</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="border-b p-4 font-semibold">安全性</td><td class="border-b p-4 text-green-600">易于数据隔离</td><td class="border-b p-4">数据边界模糊</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 14: RAG Viewpoint 4 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 4：长上下文窗口不会让 RAG 过时</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">RAG 与长上下文是互补关系，而非替代关系。</p>
+            <div class="flex flex-col items-center justify-center">
+                <div class="text-center mb-4">
+                    <p class="text-gray-600">海量数据</p>
+                    <div class="text-5xl">📚📚📚</div>
+                </div>
+                <div class="text-4xl font-bold text-cyan-500 my-2">&darr;</div>
+                <div class="text-center mb-4 p-4 bg-cyan-50 rounded-lg">
+                    <h3 class="text-xl font-bold text-cyan-800">RAG (检索)</h3>
+                    <p class="text-gray-600">筛选出最相关的部分</p>
+                </div>
+                <div class="text-4xl font-bold text-indigo-500 my-2">&darr;</div>
+                <div class="text-center p-6 border-4 border-indigo-300 rounded-lg w-full max-w-md">
+                    <h3 class="text-xl font-bold text-indigo-800">长上下文窗口</h3>
+                    <p class="text-gray-600">在精选的高质量信息中进行推理</p>
+                </div>
+            </div>
+            <p class="text-center text-gray-500 mt-8 max-w-2xl mx-auto">“大海捞针”问题：在充满无关信息的超长上下文中，模型的推理能力会下降。RAG 负责先找到“针”，再让模型分析。</p>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 15: RAG Summary -->
+        <section class="p-8 md:p-12 flex flex-col justify-center items-center bg-gray-800 text-white">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">战术篇 (RAG): 核心观点回顾</h2>
+            <ul class="space-y-4 text-xl md:text-2xl list-none text-left max-w-2xl">
+                <li class="flex items-start"><span class="text-cyan-400 mr-4 mt-1">✓</span> <span>RAG 的上限是检索：花大力气优化检索质量是关键。</span></li>
+                <li class="flex items-start"><span class="text-cyan-400 mr-4 mt-1">✓</span> <span>混合搜索是王道：结合关键词的精确性和向量的语义理解。</span></li>
+                <li class="flex items-start"><span class="text-cyan-400 mr-4 mt-1">✓</span> <span>RAG 是知识更新的首选：在成本、效率、可控性上优于微调。</span></li>
+                <li class="flex items-start"><span class="text-cyan-400 mr-4 mt-1">✓</span> <span>RAG 与长上下文是互补关系：RAG 负责筛选，长上下文负责处理。</span></li>
+            </ul>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 16: Tactical Intro (Workflows) -->
+        <section class="p-8 md:p-12 flex flex-col justify-center items-center text-center bg-green-50">
+             <div class="text-5xl mb-4">⚙️</div>
+            <h2 class="text-3xl md:text-4xl font-bold text-green-800">战术篇 (3): 工作流与优化</h2>
+            <p class="text-lg md:text-xl text-gray-700 mt-6 max-w-3xl">
+                从单个提示词扩展到构建由多步骤组成的、更可靠、更高效的系统。
+            </p>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 17: Workflow Viewpoint 1 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 1：将大任务拆分成“工作流”</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">多步骤的简单任务组合，远胜于一个包罗万象的复杂提示词。</p>
+            <div class="flex flex-col items-center">
+                <div class="w-full">
+                    <div class="flex flex-wrap justify-center items-center gap-2 text-sm md:text-base">
+                        <div class="bg-gray-100 border border-gray-300 rounded-lg p-3 text-center shadow">模糊问题</div>
+                        <div class="font-bold text-green-600">&rarr;</div>
+                        <div class="bg-green-100 border border-green-300 rounded-lg p-3 text-center shadow">问题反思</div>
+                        <div class="font-bold text-green-600">&rarr;</div>
+                        <div class="bg-green-100 border border-green-300 rounded-lg p-3 text-center shadow">生成方案</div>
+                        <div class="font-bold text-green-600">&rarr;</div>
+                        <div class="bg-green-100 border border-green-300 rounded-lg p-3 text-center shadow">测试迭代</div>
+                        <div class="font-bold text-green-600">&rarr;</div>
+                        <div class="bg-gray-100 border border-gray-300 rounded-lg p-3 text-center shadow">准确答案</div>
+                    </div>
+                </div>
+                <p class="text-center text-gray-500 mt-8 max-w-2xl mx-auto">例子：AlphaCodium 通过多步骤工作流，将 GPT-4 在编程竞赛中的准确率从 19% 提升到了 44%。</p>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 18: Workflow Viewpoint 2 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 2：优先使用“确定性”的工作流</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">完全自主的 AI 智能体（Agent）还不够可靠，难以在生产环境部署。</p>
+            <div class="flex flex-col md:flex-row items-stretch justify-center gap-6">
+                <div class="w-full md:w-2/5 p-6 border-2 border-red-300 rounded-lg bg-red-50 text-center">
+                    <h3 class="text-xl font-bold text-red-800 mb-3">不可靠模式</h3>
+                    <p class="mb-4">让 AI 智能体自主决策</p>
+                    <div class="text-5xl">❓</div>
+                    <p class="mt-4 text-red-600 font-semibold">结果难以预测</p>
+                </div>
+                <div class="w-full md:w-2/5 p-6 border-2 border-green-300 rounded-lg bg-green-50 text-center flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-green-800 mb-3">可靠模式</h3>
+                        <p class="mb-4">1. LLM 生成确定性“计划”</p>
+                    </div>
+                    <div class="text-4xl font-bold text-gray-400 my-2">&darr;</div>
+                    <div>
+                        <p class="mb-4">2. 系统严格执行该计划</p>
+                        <div class="text-5xl">✅</div>
+                        <p class="mt-4 text-green-600 font-semibold">结果可靠、可测试</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 19: Workflow Viewpoint 3 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 3：如何获得多样化的输出</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">当需要模型输出多样化结果时，仅仅提高 temperature 参数是不够的。</p>
+            <div class="space-y-6 max-w-md mx-auto">
+                <div class="flex items-center p-4 bg-gray-50 rounded-lg"><div class="text-3xl mr-4">🔀</div><div><h3 class="font-semibold text-lg text-gray-800">打乱输入顺序</h3><p class="text-gray-600">每次都随机打乱输入范例的顺序。</p></div></div>
+                <div class="flex items-center p-4 bg-gray-50 rounded-lg"><div class="text-3xl mr-4">🚫</div><div><h3 class="font-semibold text-lg text-gray-800">避免重复</h3><p class="text-gray-600">明确指示模型不要生成重复内容。</p></div></div>
+                <div class="flex items-center p-4 bg-gray-50 rounded-lg"><div class="text-3xl mr-4">❓</div><div><h3 class="font-semibold text-lg text-gray-800">变换提问方式</h3><p class="text-gray-600">从不同角度提问，引导不同思路。</p></div></div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 20: Workflow Viewpoint 4 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 4：缓存是个被低估的利器</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">缓存能极大地节省成本、降低延迟，并提升安全性。</p>
+            <div class="w-full max-w-2xl mx-auto p-6 bg-gray-50 rounded-lg">
+                <div class="flex items-center justify-center">
+                    <div class="text-center">
+                        <p>用户查询</p>
+                        <div class="text-3xl mt-2">🤔</div>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-400 mx-6">&rarr;</div>
+                    <div class="text-center p-4 border-2 border-dashed border-gray-400 rounded-lg">
+                        <h3 class="font-semibold">缓存检查</h3>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-400 mx-6">&rarr;</div>
+                    <div class="text-center">
+                        <div class="text-green-600">命中? ✅</div>
+                        <div class="text-red-600 mt-2">未命中? ❌</div>
+                    </div>
+                </div>
+                <div class="flex justify-around mt-4">
+                    <div class="text-center w-1/2">
+                        <div class="text-2xl font-bold text-gray-400">&darr;</div>
+                        <p class="mt-2 p-2 bg-green-100 rounded">直接返回结果<br>(快/省钱/安全)</p>
+                    </div>
+                    <div class="text-center w-1/2">
+                        <div class="text-2xl font-bold text-gray-400">&darr;</div>
+                        <p class="mt-2 p-2 bg-red-100 rounded">请求 LLM &rarr; 存入缓存 &rarr; 返回结果</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 21: Workflow Viewpoint 5 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 5：什么时候应该微调 (Finetune)？</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">当（且仅当）穷尽了所有提示工程技巧后，效果依然无法达标时，才应该考虑微调。</p>
+            <div class="text-center p-6 bg-yellow-50 border border-yellow-300 rounded-lg max-w-md mx-auto">
+                <div class="text-3xl mb-3">⚠️</div>
+                <h3 class="text-xl font-bold text-yellow-800">成本警告</h3>
+                <p class="text-yellow-900 mt-2">微调的成本非常高（数据、训练、部署），需要仔细权衡投入产出比。</p>
+            </div>
+            <p class="text-center text-gray-500 mt-8 max-w-2xl mx-auto">
+                微调最适用的场景：需要模型遵循特定语法或输出极其严格的格式时。
+            </p>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 22: Workflow Summary -->
+        <section class="p-8 md:p-12 flex flex-col justify-center items-center bg-gray-800 text-white rounded-b-xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">战术篇 (工作流): 核心观点回顾</h2>
+            <ul class="space-y-4 text-xl md:text-2xl list-none text-left max-w-3xl">
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>将大任务拆分成多步骤工作流，效果远胜复杂提示词。</span></li>
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>优先使用“确定性”工作流（LLM生成计划，系统执行）以保证可靠性。</span></li>
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>通过打乱顺序、避免重复、变换提问等方式获得多样化输出。</span></li>
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>善用缓存来降本增效，提升安全性。</span></li>
+                <li class="flex items-start"><span class="text-green-400 mr-4 mt-1">✓</span> <span>仅在穷尽提示工程技巧后，才考虑成本高昂的微调。</span></li>
+            </ul>
+        </section>
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 23: Tactical Intro (Evaluation) -->
+        <section class="p-8 md:p-12 flex flex-col justify-center items-center text-center bg-amber-50">
+             <div class="text-5xl mb-4">📊</div>
+            <h2 class="text-3xl md:text-4xl font-bold text-amber-800">战术篇 (4): 评估与监控</h2>
+            <p class="text-lg md:text-xl text-gray-700 mt-6 max-w-3xl">这是构建可靠 LLM 应用中最具挑战性，但也极其重要的领域。</p>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 24: Eval Viewpoint 1 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 1: 从简单的“单元测试”开始</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">为你的 LLM 应用建立一套基于断言（assertions）的单元测试。</p>
+            <div class="w-full max-w-2xl mx-auto p-6 bg-gray-50 rounded-lg border">
+                <div class="flex items-center justify-center space-x-4">
+                    <div class="text-center"><p>真实数据</p><div class="text-3xl mt-2">📝</div></div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center"><p>系统改动</p><div class="text-3xl mt-2">⚙️</div></div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center"><p>运行测试</p><div class="text-3xl mt-2">▶️</div></div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center"><p>检查输出</p><div class="text-3xl mt-2 text-green-500">✅</div></div>
+                </div>
+                <p class="text-center text-gray-500 mt-6">任何对系统的改动都应触发这套测试。亲自使用产品 (Dogfooding) 是获得测试用例的绝佳方式。</p>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 25: Eval Viewpoint 2 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 2: “LLM作为评委”能用，但不是万能丹</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">让一个强大的 LLM (如 GPT-4) 去评估另一个 LLM 的输出是一种可行的方法。</p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <div class="text-center">
+                    <p class="font-semibold">输出 A</p>
+                    <div class="p-4 border rounded-lg mt-2">...</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl">⚖️</div>
+                    <p class="font-bold text-amber-700 mt-2">GPT-4 评委</p>
+                    <p class="text-sm text-gray-500">"A 和 B 哪个更好?"</p>
+                </div>
+                <div class="text-center">
+                    <p class="font-semibold">输出 B</p>
+                    <div class="p-4 border rounded-lg mt-2">...</div>
+                </div>
+            </div>
+            <p class="text-center text-gray-500 mt-8 max-w-2xl mx-auto">最佳实践：使用成对比较、控制位置偏见、允许平局、使用思维链。但它无法处理微妙细节，且对代码等任务效果不佳。</p>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 26: Eval Viewpoint 3 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 3: 用“实习生测试”来评估任务难度</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">一个简单有效的思维模型，用来判断一个任务对 LLM 来说是否合理。</p>
+            <div class="w-full max-w-lg mx-auto p-6 bg-gray-50 rounded-lg border text-center">
+                <div class="text-4xl mb-4">🤔</div>
+                <p class="text-xl text-gray-700">“如果我把完全相同的输入和上下文，交给一个相关专业的大学实习生，他/她能完成吗？”</p>
+                <div class="flex justify-around mt-6">
+                    <div><span class="font-bold text-red-600">做不了?</span> &rarr; 任务太难/信息不足</div>
+                    <div><span class="font-bold text-green-600">能完成?</span> &rarr; 任务可行，分析模型为何出错</div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 27: Eval Viewpoint 4 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 4: 过度优化单一指标会损害整体性能</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">古德哈特定律：“当一个指标成为目标时，它就不再是一个好指标”。</p>
+            <div class="w-full max-w-md mx-auto p-6 bg-red-50 rounded-lg border border-red-200">
+                <h3 class="text-center font-bold text-red-700 mb-4">“大海捞针”测试陷阱</h3>
+                <div class="relative h-32">
+                    <div class="absolute bottom-0 left-0 w-full">
+                        <p class="text-sm text-blue-600">时间 &rarr;</p>
+                    </div>
+                    <!-- Overall Quality Line -->
+                    <svg class="absolute w-full h-full" viewbox="0 0 100 100" preserveAspectRatio="none"><path d="M 0 50 C 25 40, 75 80, 100 70" stroke="#f87171" stroke-width="3" fill="none"/></svg>
+                    <p class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-red-600 font-semibold">整体性能</p>
+                    <!-- Metric Line -->
+                    <svg class="absolute w-full h-full" viewbox="0 0 100 100" preserveAspectRatio="none"><path d="M 0 80 C 25 70, 75 30, 100 20" stroke="#60a5fa" stroke-width="3" fill="none"/></svg>
+                    <p class="absolute top-1/4 left-3/4 -translate-x-1/2 text-blue-600 font-semibold">单一指标</p>
+                </div>
+                <p class="text-center text-red-800 mt-4">过度优化单一指标，可能导致模型在真实场景中表现变差。</p>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 28: Eval Viewpoint 5 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 5: 将人工标注任务简化</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">让人类标注员做开放式打分任务，既费脑又容易产生不一致的数据。</p>
+            <div class="flex flex-col md:flex-row items-stretch justify-center gap-6">
+                <div class="w-full md:w-2/5 p-6 border-2 border-red-300 rounded-lg bg-red-50 text-center"><h3 class="text-xl font-bold text-red-800 mb-3">应避免</h3><p class="mb-4">请给这个摘要打分 (1-5)</p><div class="text-5xl">🤯</div><p class="mt-4 text-red-600 font-semibold">主观、低效、不一致</p></div>
+                <div class="w-full md:w-2/5 p-6 border-2 border-green-300 rounded-lg bg-green-50 text-center"><h3 class="text-xl font-bold text-green-800 mb-3">推荐使用</h3><p class="mb-4">摘要符合事实吗？ (是/否)</p><p>A 和 B 哪个更好？</p><div class="text-5xl">👍</div><p class="mt-4 text-green-600 font-semibold">简单、高效、更可靠</p></div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 29: Eval Viewpoint 6 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 6: 评估 (Evals) 和护栏 (Guardrails) 可以互换</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">一个好的评估方法可以直接用作线上的实时护栏。</p>
+            <div class="w-full max-w-2xl mx-auto p-6 bg-gray-50 rounded-lg border">
+                 <div class="flex items-center justify-center space-x-4">
+                    <div class="text-center"><p>LLM 输出</p><div class="text-3xl mt-2">📄</div></div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center p-4 bg-amber-100 rounded-lg border border-amber-300">
+                        <p class="font-semibold text-amber-800">事实性评估模型</p>
+                        <div class="text-sm text-gray-600">(Eval)</div>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center">
+                        <p class="text-green-600">得分高? &rarr; 通过</p>
+                        <p class="text-red-600 mt-2">得分低? &rarr; 拦截</p>
+                        <div class="text-sm text-gray-600">(Guardrail)</div>
+                    </div>
+                 </div>
+                 <p class="text-center text-gray-500 mt-6">例如，一个“事实一致性”评估模型，在线上可以直接拦截得分低的生成内容。</p>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 30: Eval Viewpoint 7 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 7: LLM 在不该回答时也会强行回答</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">LLM 倾向于“有问必答”，即使不知道答案也会编造，而不是说“我不知道”。</p>
+            <div class="w-full max-w-2xl mx-auto p-6 bg-red-50 rounded-lg border border-red-200">
+                <div class="flex items-center justify-center space-x-4">
+                    <div class="text-center"><p>LLM</p><div class="text-3xl mt-2">🤖</div></div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center"><p class="text-red-700">"我猜答案是..."</p><div class="text-sm text-gray-600">(有害/PII/编造)</div></div>
+                    <div class="text-2xl font-bold text-red-500 mx-4">X</div>
+                    <div class="text-center p-4 bg-gray-200 rounded-lg"><p class="font-semibold">下游护栏</p><div class="text-3xl mt-2">🛡️</div></div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center"><p>用户</p><div class="text-3xl mt-2">😀</div></div>
+                </div>
+                <p class="text-center text-gray-500 mt-6">解决方案：不要只依赖提示词，必须在下游设置强大的护栏来检测和过滤不当内容。</p>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 31: Eval Viewpoint 8 -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">观点 8: 幻觉 (Hallucinations) 是个顽固问题</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">事实不一致是一个非常普遍且难以根治的问题 (基线发生率 5-10%)。</p>
+            <div class="w-full max-w-2xl mx-auto p-6 bg-gray-50 rounded-lg border">
+                <h3 class="text-center font-bold text-gray-700 mb-4">“上游+下游”组合拳</h3>
+                <div class="flex items-center justify-center space-x-4">
+                    <div class="text-center"><p class="font-semibold">上游 (生成前)</p><p class="text-sm">提示工程 (思维链)</p></div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center p-4 bg-blue-100 rounded-lg"><p>LLM</p></div>
+                    <div class="text-2xl font-bold text-gray-400">&rarr;</div>
+                    <div class="text-center"><p class="font-semibold">下游 (生成后)</p><p class="text-sm">事实性检测护栏</p></div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12 md:my-16">
+
+        <!-- Section 32: Evaluation Summary -->
+        <section class="p-8 md:p-12 flex flex-col justify-center items-center bg-gray-800 text-white rounded-b-xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">战术篇 (评估与监控): 核心观点回顾</h2>
+            <ul class="space-y-4 text-xl md:text-2xl list-none text-left max-w-3xl">
+                <li class="flex items-start"><span class="text-amber-400 mr-4 mt-1">✓</span> <span>从简单的单元测试开始，建立评估基线。</span></li>
+                <li class="flex items-start"><span class="text-amber-400 mr-4 mt-1">✓</span> <span>“LLM作评委”可用但非万能，需谨慎使用。</span></li>
+                <li class="flex items-start"><span class="text-amber-400 mr-4 mt-1">✓</span> <span>用“实习生测试”判断任务对LLM的合理性。</span></li>
+                <li class="flex items-start"><span class="text-amber-400 mr-4 mt-1">✓</span> <span>警惕过度优化单一指标，避免损害整体性能。</span></li>
+                <li class="flex items-start"><span class="text-amber-400 mr-4 mt-1">✓</span> <span>将人工标注任务简化为“是/否”或“A/B对比”。</span></li>
+                <li class="flex items-start"><span class="text-amber-400 mr-4 mt-1">✓</span> <span>好的评估方法可以直接用作线上的实时护栏。</span></li>
+                <li class="flex items-start"><span class="text-amber-400 mr-4 mt-1">✓</span> <span>必须用下游护栏拦截LLM的强行回答和幻觉。</span></li>
+            </ul>
+        </section>
+
+    </main>
+</body>
+</html>
+
