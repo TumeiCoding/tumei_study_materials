@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 产品开发与评估</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .slider-container {
+        width: 100%;
+        max-width: 1000px;
+        aspect-ratio: 16 / 9;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        background-color: white;
+    }
+    .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 40px 60px;
+        box-sizing: border-box;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.6s ease-in-out, visibility 0.6s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .slide.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .slide h1, .slide h2, .slide h3 {
+        color: #0056b3;
+        margin-bottom: 20px;
+    }
+    .slide h1 { font-size: 3em; }
+    .slide h2 { font-size: 2.2em; }
+    .slide p, .slide li {
+        font-size: 1.2em;
+        line-height: 1.6;
+        color: #444;
+    }
+    .slide ul {
+        list-style-type: none;
+        padding-left: 0;
+        text-align: left;
+    }
+    .slide ul li {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: start;
+    }
+    .slide ul li i {
+        color: #007bff;
+        margin-right: 15px;
+        margin-top: 5px;
+    }
+    .navigation {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+    }
+    .nav-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .nav-btn:hover, .nav-btn:disabled {
+        background-color: #0056b3;
+    }
+    .nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 5px;
+        background-color: #007bff;
+        width: 0;
+        transition: width 0.3s;
+    }
+    .flowchart-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        margin-top: 30px;
+    }
+    .flowchart-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 18%;
+    }
+    .flowchart-icon {
+        font-size: 2.5em;
+        color: #007bff;
+        margin-bottom: 15px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #e9f5ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #007bff;
+    }
+    .flowchart-step h3 {
+        font-size: 1.2em;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .flowchart-arrow {
+        font-size: 2em;
+        color: #007bff;
+        align-self: center;
+        margin: 0 -20px;
+    }
+    .two-columns {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .column {
+        width: 48%;
+    }
+    .maturity-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        width: 100%;
+        margin-top: 30px;
+    }
+    .maturity-level {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        text-align: left;
+    }
+    .maturity-level h3 {
+        font-size: 1.3em;
+        color: #0056b3;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .maturity-level h3 i {
+        margin-right: 10px;
+    }
+    .maturity-level ul {
+        padding-left: 20px;
+    }
+    .maturity-level ul li {
+        font-size: 0.95em;
+        margin-bottom: 8px;
+        color: #555;
+        list-style-type: disc;
+    }
+    .slide-content {
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+
+<div class="slider-container">
+    <div id="slides-wrapper">
+        
+        <div class="slide active">
+            <div class="slide-content">
+                <h1>AI 产品开发与评估策略</h1>
+                <p>一份关于如何构建、评估和优化 AI 产品的综合指南</p>
+                <i class="fas fa-brain fa-3x" style="color: #007bff; margin-top: 20px;"></i>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2>AI 产品开发周期</h2>
+                <div class="flowchart-container">
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fas fa-lightbulb"></i></div>
+                        <h3>1. 原型</h3>
+                        <p>构想与定义</p>
+                    </div>
+                    <div class="flowchart-arrow"><i class="fas fa-angle-right"></i></div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fas fa-tasks"></i></div>
+                        <h3>2. 评估</h3>
+                        <p>定标与测试</p>
+                    </div>
+                    <div class="flowchart-arrow"><i class="fas fa-angle-right"></i></div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fas fa-rocket"></i></div>
+                        <h3>3. 最大化</h3>
+                        <p>提升表现</p>
+                    </div>
+                    <div class="flowchart-arrow"><i class="fas fa-angle-right"></i></div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fas fa-cogs"></i></div>
+                        <h3>4. 优化</h3>
+                        <p>提升效率</p>
+                    </div>
+                    <div class="flowchart-arrow"><i class="fas fa-angle-right"></i></div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fas fa-check-circle"></i></div>
+                        <h3>5. 解决问题?</h3>
+                        <p>验收与迭代</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-lightbulb" style="margin-right: 15px;"></i>1. 原型阶段：构想与定义</h2>
+                <p>这是AI产品开发的起点，关键是明确方向和目标。</p>
+                <ul style="margin-top: 30px; width: 80%;">
+                    <li><i class="fas fa-map-marker-alt"></i><div><strong>AI 用在哪里？</strong><br><small>确定核心应用场景，例如：是用于客户服务、内容创作还是数据分析？</small></div></li>
+                    <li><i class="fas fa-users-cog"></i><div><strong>辅助工具 (Copilot) 还是独立工作 (Agent)？</strong><br><small><b>Copilot:</b> AI作为助手，辅助人类决策。<b>Agent:</b> AI自主执行并完成任务。</small></div></li>
+                    <li><i class="fas fa-rocket"></i><div><strong>最简可行产品 (MVP) 是什么样？</strong><br><small>定义能满足核心需求的最基础版本，快速验证市场。</small></div></li>
+                    <li><i class="fas fa-brain"></i><div><strong>AI 需要多聪明才算合格？</strong><br><small>设定一个初步的性能基准，例如：准确率达到80%才能上线。</small></div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-tasks" style="margin-right: 15px;"></i>2. 评估阶段：定标与测试</h2>
+                <p>为 AI “定规矩”和“准备考试”，确保其表现可衡量、可优化。</p>
+                <ul style="margin-top: 30px; width: 80%;">
+                    <li><i class="fas fa-ruler-combined"></i><div><strong>定义评估标准 (Metrics):</strong><br><small>确定如何衡量成功。例如：准确率、响应时间、用户满意度等。</small></div></li>
+                    <li><i class="fas fa-database"></i><div><strong>制作测试数据集 (Test set):</strong><br><small>创建一套高质量的“考题”，覆盖各种真实场景和边缘情况。</small></div></li>
+                    <li><i class="fas fa-chart-line"></i><div><strong>确定一个基础水平 (Baseline):</strong><br><small>找到一个参照物，比如现有方案或其他模型的表现，作为比较的起点。</small></div></li>
+                    <li><i class="fas fa-bullseye"></i><div><strong>设定一个目标 (Target):</strong><br><small>明确要达到的最终性能目标，例如：AI 的表现要超过 Baseline 20%。</small></div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-rocket" style="margin-right: 15px;"></i>3. 最大化阶段：提升表现</h2>
+                <p>通过各种技术手段，让 AI 的表现达到最佳。</p>
+                <div class="two-columns">
+                    <div class="column">
+                        <ul>
+                            <li><i class="fas fa-magic"></i><div><strong>提示词工程:</strong><br><small>优化向 AI 下达指令的方式。</small></div></li>
+                            <li><i class="fas fa-lightbulb"></i><div><strong>思维链 / 自我反思:</strong><br><small>引导 AI 思考并自我修正。</small></div></li>
+                            <li><i class="fas fa-book-open"></i><div><strong>RAG 改进:</strong><br><small>优化 AI 从外部知识库检索信息的能力。</small></div></li>
+                            <li><i class="fas fa-cogs"></i><div><strong>工具使用:</strong><br><small>赋予 AI 使用计算器、搜索引擎等工具。</small></div></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><i class="fas fa-layer-group"></i><div><strong>微调 / 蒸馏:</strong><br><small>用特定数据训练模型，或用小模型模仿大模型。</small></div></li>
+                            <li><i class="fas fa-users"></i><div><strong>多代理 (Multi-agent):</strong><br><small>让多个 AI 协同工作，处理复杂任务。</small></div></li>
+                             <li><i class="fas fa-bolt"></i><div><strong>更强的模型:</strong><br><small>直接使用能力更强的AI模型。</small></div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-cogs" style="margin-right: 15px;"></i>4. 优化阶段：提升效率</h2>
+                <p>当 AI 表现达标后，重点转向如何让它运行得更快、成本更低。</p>
+                <ul style="margin-top: 30px; width: 80%;">
+                    <li><i class="fas fa-tachometer-alt"></i><div><strong>降低延迟和/或成本:</strong><br><small>核心目标：缩短响应时间，减少计算开销。</small></div></li>
+                    <li><i class="fas fa-exchange-alt"></i><div><strong>任务分流给小模型:</strong><br><small>简单的任务使用轻量级模型，避免“杀鸡用牛刀”。</small></div></li>
+                    <li><i class="fas fa-compress-arrows-alt"></i><div><strong>缩短输入和输出:</strong><br><small>精简提示和AI回复的长度，直接节省成本。</small></div></li>
+                    <li><i class="fas fa-feather-alt"></i><div><strong>按需微调:</strong><br><small>通过微调，让小模型达到大模型在特定任务上的效果，实现降本增效。</small></div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-check-circle" style="margin-right: 15px;"></i>5. 你解决问题了吗？验收与迭代</h2>
+                <p>最后一步是验收成果，并为下一步行动做决策。</p>
+                <ul style="margin-top: 30px; width: 80%;">
+                    <li><i class="fas fa-redo"></i><div><strong>如果没解决，别放弃，继续努力！</strong><br><small>返回前面的步骤，重新评估、最大化或优化。</small></div></li>
+                    <li><i class="fas fa-user-shield"></i><div><strong>如果实在不行，引入人工审核 (HITL):</strong><br><small><b>Human-in-the-loop:</b> 在 AI 不够完美时，让人类专家审核或修正其结果，保证质量。</small></div></li>
+                    <li><i class="fas fa-cloud-upload-alt"></i><div><strong>等待下一代模型:</strong><br><small>有时候，当前的技术水平就是瓶颈，可以等待更强的模型出现。</small></div></li>
+                    <li><i class="fas fa-sync-alt"></i><div><strong>重新思考产品:</strong><br><small>如果问题始终无法解决，可能需要重新审视产品的核心定位和可行性。</small></div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-balance-scale" style="margin-right: 15px;"></i>评估 (Evals) 的定义</h2>
+                <p style="font-style: italic; max-width: 80%; margin: 20px auto; background-color: #e9f5ff; padding: 20px; border-left: 5px solid #007bff; border-radius: 8px;">
+                    “评估指的是，对照‘黄金标准’的基准来衡量一个 ML 模型的表现，以确保其准确性、可靠性，并与真实世界的任务保持一致。”
+                </p>
+                <p style="margin-top: 30px;">
+                    <strong>简单来说：</strong>就是拿一套标准答案 (黄金标准) 来给 AI “打分”，<br>看看它做得对不对、可不可靠，以及能否真正解决现实问题。
+                </p>
+            </div>
+        </div>
+
+        <div class="slide" style="justify-content: flex-start; padding-top: 60px;">
+            <div class="slide-content">
+                <h2><i class="fas fa-layer-group" style="margin-right: 15px;"></i>评估成熟度的四个阶段</h2>
+                <p>一个公司在“评估AI”这件事上，从不成熟到非常成熟会经历的四个阶段。</p>
+                <div class="maturity-grid">
+                    <div class="maturity-level">
+                        <h3><i class="fas fa-seedling"></i>等级 1: 基础</h3>
+                        <ul>
+                            <li>完全凭感觉，非常主观</li>
+                            <li>改动很随意，心里没底</li>
+                        </ul>
+                    </div>
+                    <div class="maturity-level">
+                        <h3><i class="fas fa-tools"></i>等级 2: 手动</h3>
+                        <ul>
+                            <li>有标准化流程，但需专家手动评估</li>
+                            <li>速度慢、成本高</li>
+                            <li>有基本部署流程</li>
+                        </ul>
+                    </div>
+                    <div class="maturity-level">
+                        <h3><i class="fas fa-robot"></i>等级 3: 自动化</h3>
+                        <ul>
+                            <li>评估标准清晰、自动化</li>
+                            <li>可快速迭代和改进</li>
+                            <li>评估系统离线运行</li>
+                            <li>仍有少量手动评估</li>
+                        </ul>
+                    </div>
+                    <div class="maturity-level">
+                        <h3><i class="fas fa-sync-alt fa-spin"></i>等级 4: 飞轮</h3>
+                        <ul>
+                            <li>评估覆盖面广、值得信赖</li>
+                            <li>部署前无需人工评估</li>
+                            <li>有线上追踪和评估工具</li>
+                            <li>评估融入开发全流程 (CI/CD)</li>
+                            <li>线上部署的护栏 (Live guardrail)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-sitemap" style="margin-right: 15px;"></i>评估方法的三种分类</h2>
+                <p>从简单到复杂，建议从最简单的“确定性评估”开始。</p>
+                <div class="maturity-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 40px;">
+                    <div class="maturity-level">
+                        <h3><i class="fas fa-check-double"></i>01. 确定性评估</h3>
+                        <p>有明确、非黑即白的答案，易于自动化。</p>
+                    </div>
+                    <div class="maturity-level">
+                        <h3><i class="fas fa-star-half-alt"></i>02. 模型评分评估</h3>
+                        <p>用强大的AI模型给另一个AI打分，适合主观内容。</p>
+                    </div>
+                    <div class="maturity-level">
+                        <h3><i class="fas fa-user-check"></i>03. 人工评分评估</h3>
+                        <p>对于最复杂、最细微的评估，需要人类专家判断。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-check-double" style="margin-right: 15px;"></i>01. 确定性评估 (Deterministic)</h2>
+                <p>这类评估有明确的、非黑即白的答案，是实现自动化评估的基础。</p>
+                <ul style="margin-top: 30px; width: 80%;">
+                    <li><i class="fas fa-list-ol"></i><div><strong>选择题:</strong><br><small>AI的回答是否与预设的正确选项一致？</small></div></li>
+                    <li><i class="fas fa-file-code"></i><div><strong>格式检查:</strong><br><small>AI生成的内容是否符合特定的格式要求（如JSON、XML）？</small></div></li>
+                    <li><i class="fas fa-search"></i><div><strong>字符串包含:</strong><br><small>AI的回答中是否包含了某个必须出现的关键词？</small></div></li>
+                    <li><i class="fas fa-calculator"></i><div><strong>BLEU / ROUGE 分数:</strong><br><small>用于自动评估机器翻译或文本摘要质量的算法分数。</small></div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-star-half-alt" style="margin-right: 15px;"></i>02. 模型评分评估 (Model-Graded)</h2>
+                <p>用一个强大的AI模型（如GPT-4o）作为“考官”，来给另一个AI的答案打分。</p>
+                <p style="font-size: 1em; color: #666;">这种方法适合评估一些比较主观、没有唯一标准答案的内容。</p>
+                <ul style="margin-top: 30px; width: 80%;">
+                    <li><i class="fas fa-check-circle"></i><div><strong>忠实度 (Faithfulness):</strong><br><small>AI 生成的摘要是否忠于原文，没有歪曲或捏造成分？</small></div></li>
+                    <li><i class="fas fa-bullseye"></i><div><strong>相关性 (Relevance):</strong><br><small>AI 的回答和用户提出的问题是否高度相关？</small></div></li>
+                    <li><i class="fas fa-thumbs-up"></i><div><strong>帮助性 (Helpfulness):</strong><br><small>AI 的回答是否对用户有实际帮助？</small></div></li>
+                    <li><i class="fas fa-smile"></i><div><strong>语气 (Tone):</strong><br><small>AI 的语气是否符合要求（如友好、专业、幽默等）？</small></div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-user-check" style="margin-right: 15px;"></i>03. 人工评分评估 (Human-Graded)</h2>
+                <p>对于最复杂、最细微的评估，最终还是需要人类专家来判断。</p>
+                <p style="font-size: 1em; color: #666;">这是成本最高，但也是最准确的评估方法。</p>
+                <ul style="margin-top: 30px; width: 80%;">
+                    <li><i class="fas fa-exchange-alt"></i><div><strong>并排比较偏好 (Side-by-side):</strong><br><small>让人类评估者在两个或多个AI答案中，选出最好的一个。</small></div></li>
+                    <li><i class="fas fa-award"></i><div><strong>细微的质量评分 (Subtle quality scoring):</strong><br><small>根据非常详细的标准，对AI的回答进行多维度打分。</small></div></li>
+                    <li><i class="fas fa-book"></i><div><strong>事实性 (Factuality):</strong><br><small>AI 说的是不是事实？这常常需要特定领域的专家来判断。</small></div></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="navigation">
+        <button id="prevBtn" class="nav-btn"><i class="fas fa-arrow-left"></i> 上一页</button>
+        <button id="nextBtn" class="nav-btn">下一页 <i class="fas fa-arrow-right"></i></button>
+    </div>
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressBar = document.getElementById('progressBar');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+        updateNavButtons();
+        updateProgressBar();
+    }
+
+    function updateNavButtons() {
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+    }
+
+    function updateProgressBar() {
+        const progress = ((currentSlide + 1) / slides.length) * 100;
+        progressBar.style.width = progress + '%';
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentSlide > 0) {
+            showSlide(currentSlide - 1);
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentSlide < slides.length - 1) {
+            showSlide(currentSlide + 1);
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            nextBtn.click();
+        } else if (e.key === 'ArrowLeft') {
+            prevBtn.click();
+        }
+    });
+    
+    // Initialize first slide
+    if(slides.length > 0) {
+        showSlide(0);
+    }
+});
+</script>
+
+</body>
+</html>
