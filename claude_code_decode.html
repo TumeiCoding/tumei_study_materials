@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 成功秘诀 (详细版 PPT)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .presentation-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 720px; /* 16:9 aspect ratio */
+            position: relative;
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            padding: 2.5rem 3.5rem;
+            position: absolute;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .card {
+            background-color: #fafcff;
+            border: 1px solid #e0e7ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(66, 99, 235, 0.08);
+        }
+        .card-title {
+            color: #3730a3; /* Indigo 800 */
+        }
+        .code-snippet {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+        }
+        
+        /* Navigation Styles */
+        .navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+        .nav-button {
+            background-color: white;
+            border: 1px solid #d1d5db;
+            border-radius: 9999px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .nav-button:hover:not(:disabled) {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .dots-container { display: flex; gap: 0.5rem; }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #d1d5db;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .dot.active { background-color: #4f46e5; }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+        <!-- Slide 1: 标题页 -->
+        <div class="slide active flex-col justify-center items-center text-center">
+            <h1 class="text-6xl font-bold text-gray-800 tracking-wide">Claude Code 为何如此强大？🤔</h1>
+            <p class="mt-6 text-3xl text-indigo-600 font-semibold">核心思想：大道至简，傻瓜式简单才是王道！</p>
+            <p class="mt-4 text-lg text-gray-500">(Keep It Simple, Dummy)</p>
+            <div class="mt-12 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                <p class="text-indigo-800">本文档为交互式幻灯片，请使用下方的按钮进行翻页。</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: 控制回路 -->
+        <div class="slide">
+            <header class="flex items-center gap-4 mb-6 pb-4 border-b">
+                <i data-lucide="brain-circuit" class="w-12 h-12 text-indigo-600"></i>
+                <div>
+                    <p class="text-sm font-semibold text-indigo-500">第一部分</p>
+                    <h2 class="text-4xl font-bold text-gray-800">控制回路：大脑结构要简单 🧠</h2>
+                </div>
+            </header>
+            <main class="grid grid-cols-1 md:grid-cols-2 gap-8 flex-grow">
+                <div class="card p-6 rounded-xl">
+                    <h3 class="card-title text-2xl font-bold flex items-center gap-3 mb-4"><i data-lucide="network"></i>单一主心骨</h3>
+                    <p class="text-gray-600 mb-4">拒绝复杂的“多智能体系统”（如PM->程序员->测试员的模式）。Claude Code 只有一个主工作流程，这使得它：</p>
+                    <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                        <li><strong class="font-semibold">思路清晰：</strong>任务路径单一，不易跑偏。</li>
+                        <li><strong class="font-semibold">易于调试：</strong>出问题时，很容易定位错误来源。</li>
+                        <li><strong class="font-semibold">结构稳健：</strong>避免了多智能体之间交接的复杂性和脆弱性。</li>
+                    </ul>
+                    <p class="mt-4 text-sm text-gray-500 italic">“Debuggability >>> complicated hand-tuned multi-agent... mishmash.” (可调试性远胜于复杂的、精调的多智能体大杂烩)</p>
+                </div>
+                <div class="card p-6 rounded-xl">
+                    <h3 class="card-title text-2xl font-bold flex items-center gap-3 mb-4"><i data-lucide="scaling"></i>小事用小模型</h3>
+                     <p class="text-gray-600 mb-4">不是所有任务都需要最强的模型。Claude Code 超过50%的重要调用都使用了更小、更快的 `claude-3-5-haiku` 模型。</p>
+                    <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                        <li><strong class="font-semibold">应用场景：</strong>阅读大文件、解析网页、处理 git 历史、总结对话等。</li>
+                        <li><strong class="font-semibold">巨大优势：</strong>成本降低 70-80%，响应速度更快，体验更流畅。</li>
+                    </ul>
+                     <p class="mt-4 text-sm text-gray-500 italic">好钢用在刀刃上，把最强大的模型留给最核心的编码和推理任务。</p>
+                </div>
+            </main>
+        </div>
+
+        <!-- Slide 3: 指令 (Prompts) -->
+        <div class="slide">
+             <header class="flex items-center gap-4 mb-6 pb-4 border-b">
+                <i data-lucide="file-text" class="w-12 h-12 text-teal-600"></i>
+                <div>
+                    <p class="text-sm font-semibold text-teal-500">第二部分</p>
+                    <h2 class="text-4xl font-bold text-gray-800">指令：说明书要写得好 📝</h2>
+                </div>
+            </header>
+            <main class="grid grid-cols-1 md:grid-cols-2 gap-8 flex-grow">
+                 <div class="card p-6 rounded-xl">
+                    <h3 class="text-2xl font-bold text-teal-800 flex items-center gap-3 mb-4"><i data-lucide="book-marked"></i>使用 <code>claude.md</code> 备忘录</h3>
+                    <p class="text-gray-600 mb-4">这是一个强大的模式，让用户可以创建一个上下文文件，告诉 AI 项目的特定规则和偏好。AI 每次请求都会读取它。</p>
+                    <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                        <li><strong class="font-semibold">强制规则：</strong>比如，强制使用某个库，或者跳过某些文件夹。</li>
+                        <li><strong class="font-semibold">提供上下文：</strong>告知代码库中无法直接推断出的背景信息。</li>
+                        <li><strong class="font-semibold">效果显著：</strong>使用与否，Claude Code 的表现判若两人。</li>
+                    </ul>
+                </div>
+                <div class="card p-6 rounded-xl">
+                    <h3 class="text-2xl font-bold text-teal-800 flex items-center gap-3 mb-4"><i data-lucide="tags"></i>用特殊标签和范例划重点</h3>
+                     <p class="text-gray-600 mb-4">通过结构化的方式（XML 标签和 Markdown）来组织和强调指令，让 AI 更容易理解和遵守。</p>
+                    <div class="space-y-2 text-sm">
+                        <p><code class="code-snippet text-yellow-300">&lt;system-reminder&gt;</code>: 提醒 AI 容易忘记的事情。</p>
+                        <p><code class="code-snippet text-green-300">&lt;good-example&gt;</code>: 展示正确的做法。</p>
+                        <p><code class="code-snippet text-red-300">&lt;bad-example&gt;</code>: 展示错误的做法，形成对比。</p>
+                    </div>
+                     <p class="mt-4 text-sm text-gray-500 italic">这种方式比单纯的“Do/Don't”列表更清晰、更有效。</p>
+                </div>
+            </main>
+        </div>
+
+        <!-- Slide 4: 工具 (Tools) -->
+        <div class="slide">
+            <header class="flex items-center gap-4 mb-6 pb-4 border-b">
+                <i data-lucide="wrench" class="w-12 h-12 text-sky-600"></i>
+                <div>
+                    <p class="text-sm font-semibold text-sky-500">第三部分</p>
+                    <h2 class="text-4xl font-bold text-gray-800">工具：配备合适的工具箱 🧰</h2>
+                </div>
+            </header>
+            <main class="grid grid-cols-2 gap-8 flex-grow">
+                <div class="col-span-2 card p-6 rounded-xl">
+                     <h3 class="text-2xl font-bold text-sky-800 flex items-center gap-3 mb-4"><i data-lucide="search-code"></i>LLM Search >>> RAG Search</h3>
+                     <p class="text-gray-600 mb-4">Claude Code 放弃了流行的 RAG（检索增强生成）技术，而是让 LLM 像一个真正的程序员一样，使用 <code>ripgrep</code> 等命令行工具直接在代码库中搜索。</p>
+                     <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                        <li><strong>RAG 的问题：</strong>依赖外部索引，分块、排序等环节都可能引入“隐藏的”错误，不够智能。</li>
+                        <li><strong>LLM Search 的优势：</strong>利用了 LLM 对代码的深刻理解，可以执行复杂的正则搜索，更灵活、更强大，也更符合程序员的直觉。</li>
+                     </ul>
+                </div>
+                <div class="card p-6 rounded-xl">
+                    <h3 class="text-2xl font-bold text-sky-800 flex items-center gap-3 mb-4"><i data-lucide="cubes"></i>工具要“有粗有细”</h3>
+                     <p class="text-gray-600 mb-4">工具的设计需要在“底层通用”和“高层专用”之间找到平衡。</p>
+                     <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                        <li><strong>底层工具：</strong><code>Bash</code>, <code>Read</code>, <code>Write</code> (灵活万能)</li>
+                        <li><strong>中层工具：</strong><code>Grep</code>, <code>Glob</code>, <code>Edit</code> (常用操作封装)</li>
+                        <li><strong>高层工具：</strong><code>WebFetch</code>, <code>getDiagnostics</code> (特定任务一键完成)</li>
+                     </ul>
+                </div>
+                <div class="card p-6 rounded-xl">
+                    <h3 class="text-2xl font-bold text-sky-800 flex items-center gap-3 mb-4"><i data-lucide="list-checks"></i>自我管理待办清单</h3>
+                     <p class="text-gray-600 mb-4">为防止 AI 在长任务中“迷失方向”（Context Rot），Claude Code 使用了由模型自己维护的待办清单。</p>
+                      <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                        <li><strong>保持聚焦：</strong>AI 会被频繁提醒参考清单，确保不偏离最终目标。</li>
+                        <li><strong>灵活调整：</strong>AI 可以根据新情况，动态添加、修改或删除任务项。</li>
+                     </ul>
+                </div>
+            </main>
+        </div>
+
+        <!-- Slide 5: 可控性 -->
+        <div class="slide">
+             <header class="flex items-center gap-4 mb-6 pb-4 border-b">
+                <i data-lucide="steering-wheel" class="w-12 h-12 text-amber-600"></i>
+                <div>
+                    <p class="text-sm font-semibold text-amber-500">第四部分</p>
+                    <h2 class="text-4xl font-bold text-gray-800">可控性：如何“驯服”这头猛兽 🎯</h2>
+                </div>
+            </header>
+            <main class="grid grid-cols-1 md:grid-cols-3 gap-8 flex-grow">
+                 <div class="card p-6 rounded-xl text-center flex flex-col items-center justify-center">
+                    <i data-lucide="paintbrush" class="w-12 h-12 text-amber-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-amber-800 mb-2">定义语气风格</h3>
+                    <p class="text-gray-600">在指令中明确规定 AI 的沟通方式，例如：“不要说教”、“直接给代码，别讲废话”、“用户没要求就别用 emoji”，以提升用户体验。</p>
+                </div>
+                 <div class="card p-6 rounded-xl text-center flex flex-col items-center justify-center">
+                    <i data-lucide="alert-triangle" class="w-12 h-12 text-amber-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-amber-800 mb-2">靠“大写”强调</h3>
+                    <p class="text-gray-600">很不幸，目前最有效的“紧箍咒”仍然是在指令中使用 <code class="bg-gray-200 px-1 rounded">IMPORTANT</code>, <code class="bg-gray-200 px-1 rounded">VERY IMPORTANT</code>, <code class="bg-gray-200 px-1 rounded">NEVER</code> 等词语来强制 AI 遵守规则。</p>
+                </div>
+                 <div class="card p-6 rounded-xl text-center flex flex-col items-center justify-center">
+                    <i data-lucide="list-ordered" class="w-12 h-12 text-amber-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-amber-800 mb-2">把任务写成算法</h3>
+                    <p class="text-gray-600">避免给出一堆杂乱的“Dos and Don'ts”。最好将核心任务流程化、步骤化，像写算法一样，明确告诉 AI 决策的路径和依据。</p>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Slide 6: 总结 -->
+        <div class="slide justify-center items-center text-center">
+            <h2 class="text-5xl font-bold text-gray-800">🚀 总结：少即是多 (Less is More)</h2>
+            <p class="mt-6 text-2xl text-gray-600 max-w-4xl">Claude Code 的成功在于它抵制了过度设计的诱惑，用最简单、最直接的方式，构建了一个清晰、可控、且极其强大的 AI 助手。它让我们相信，一个优秀的 Agent 可以既简单又强大。</p>
+            <div class="mt-10">
+                <button id="restartBtn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors">
+                    返回首页
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+        <button id="prevBtn" class="nav-button">
+            <i data-lucide="arrow-left"></i>
+        </button>
+        <div class="dots-container" id="dotsContainer">
+            <!-- Dots will be generated by JS -->
+        </div>
+        <button id="nextBtn" class="nav-button">
+            <i data-lucide="arrow-right"></i>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const slides = document.querySelectorAll('.slide');
+            const dotsContainer = document.getElementById('dotsContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const restartBtn = document.getElementById('restartBtn');
+            let currentSlide = 0;
+
+            // Generate dots
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => showSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = document.querySelectorAll('.dot');
+
+            function showSlide(index) {
+                // Bounds check
+                if (index >= slides.length) index = slides.length - 1;
+                if (index < 0) index = 0;
+
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === slides.length - 1;
+                
+                currentSlide = index;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                showSlide(currentSlide - 1);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                showSlide(currentSlide + 1);
+            });
+
+            restartBtn.addEventListener('click', () => {
+                showSlide(0);
+            });
+
+            // Initial setup
+            showSlide(0);
+        });
+    </script>
+</body>
+</html>
+

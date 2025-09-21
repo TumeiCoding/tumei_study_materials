@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手把手教你搭建 AI 产品 Evals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .section-divider {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen py-12 px-4">
+    <main class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden">
+        
+        <!-- Slide 1: Title -->
+        <section class="p-8 md:p-16 flex flex-col justify-center items-center text-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">手把手教你搭建 AI 产品 Evals</h1>
+            <p class="text-2xl md:text-3xl font-light mb-6">AI 下半场，模型评估比模型训练更重要</p>
+            <i class="fa-solid fa-rocket text-6xl"></i>
+            <div class="text-sm mt-8">
+                <p>内容来源: Aman Khan 的博客文章</p>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+
+        <!-- Slide 2: The "Hidden Leverage" -->
+        <section class="p-8 md:p-12 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">产品的“隐藏杠杆”</h2>
+            <p class="text-xl italic text-gray-600 max-w-3xl mx-auto">“Prompt 可能会上新闻头条，但 Evals 却在悄无声息地决定你产品的生死。”</p>
+            <p class="text-lg text-gray-700 mt-6 max-w-3xl mx-auto">编写出色的 Evals 能力，正在迅速成为 2025 年及以后 AI PM 的决定性技能。</p>
+            <i class="fa-solid fa-balance-scale text-5xl text-blue-500 mt-8"></i>
+        </section>
+
+        <hr class="section-divider my-12">
+
+        <!-- Slide 3: Why Evals Matter -->
+        <section class="p-8 md:p-12 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8"><i class="fa-solid fa-circle-question text-blue-500"></i> Evals 为什么重要？</h2>
+            <div class="flex justify-center items-center gap-4 md:gap-8 text-sm md:text-base">
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 text-center shadow-md">
+                    <i class="fa-solid fa-user fa-2x text-blue-600 mb-2"></i>
+                    <p class="font-semibold">用户请求</p>
+                    <p class="text-gray-600">“旧金山周末游”</p>
+                </div>
+                <div class="text-2xl text-gray-400">&rightarrow;</div>
+                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-center shadow-md">
+                    <i class="fa-solid fa-robot fa-2x text-yellow-600 mb-2"></i>
+                    <p class="font-semibold">AI Agent 处理</p>
+                </div>
+                <div class="text-2xl text-gray-400">&rightarrow;</div>
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200 text-center shadow-md">
+                    <i class="fa-solid fa-plane-arrival fa-2x text-red-600 mb-2"></i>
+                    <p class="font-semibold">错误输出</p>
+                    <p class="text-gray-600">订了去圣地亚哥的票</p>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-center">
+                <div class="bg-green-50 p-6 rounded-lg border-2 border-green-300 text-center shadow-lg w-1/2">
+                    <i class="fa-solid fa-shield-halved fa-3x text-green-600 mb-3"></i>
+                    <p class="text-xl font-bold text-green-800">Evals介入</p>
+                    <p class="text-gray-700">在上线前发现并修复问题</p>
+                </div>
+            </div>
+            <p class="text-lg text-gray-700 mt-8 max-w-3xl mx-auto"><strong>Evals</strong> 是在错误发生前，提前发现并避免问题的“安全网”。</p>
+        </section>
+
+        <hr class="section-divider my-12">
+        
+        <!-- Slide 4: Defining "Good" -->
+        <section class="p-8 md:p-12 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8"><i class="fa-solid fa-bullseye text-blue-500"></i> Evals: 为 AI 定义“好”的标准</h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-10">Evals 是衡量 AI 系统质量和效果的方法。它为你的 AI 产品清晰地定义了「好」的标准。</p>
+            <div class="flex flex-col md:flex-row justify-center gap-8 max-w-4xl mx-auto">
+                <div class="flex-1 bg-gray-50 p-6 rounded-lg border">
+                    <h3 class="text-xl font-bold text-blue-800 mb-4"><i class="fa-solid fa-car"></i> AI Evals 像驾照考试</h3>
+                    <ul class="text-left list-disc pl-5 text-gray-600 space-y-2">
+                        <li><strong>感知:</strong> 能否准确解读信号？</li>
+                        <li><strong>决策:</strong> 能否稳定做出正确选择？</li>
+                        <li><strong>安全:</strong> 能否始终遵循指令？</li>
+                    </ul>
+                </div>
+                <div class="flex-1 bg-gray-50 p-6 rounded-lg border">
+                    <h3 class="text-xl font-bold text-blue-800 mb-4"><i class="fa-solid fa-train"></i> 传统单元测试像检查火车</h3>
+                    <ul class="text-left list-disc pl-5 text-gray-600 space-y-2">
+                        <li>过程直接</li>
+                        <li>结果确定</li>
+                        <li>通过/失败界限分明</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+
+        <!-- Slide 5: Three Methods of Evals -->
+        <section class="p-8 md:p-12 text-center">
+             <h2 class="text-3xl font-bold text-gray-800 mb-10"><i class="fa-solid fa-microscope text-blue-500"></i> Evals 的三种方法</h2>
+            <div class="flex flex-col md:flex-row justify-center gap-8 max-w-6xl mx-auto">
+                <div class="flex-1 p-6 bg-white rounded-lg shadow-lg border-t-4 border-orange-400">
+                    <h3 class="text-xl font-bold mb-3"><i class="fa-solid fa-user-check text-orange-500"></i> 人工 Evals</h3>
+                    <p class="text-gray-700"><strong>核心:</strong> 人工反馈或专家标注 (如 👍/👎)。</p>
+                    <p class="text-sm text-green-600 mt-2"><strong>优点:</strong> 黄金标准，最贴近用户体验。</p>
+                    <p class="text-sm text-red-600 mt-1"><strong>缺点:</strong> 慢、贵、数据稀疏。</p>
+                </div>
+                <div class="flex-1 p-6 bg-white rounded-lg shadow-lg border-t-4 border-teal-400">
+                    <h3 class="text-xl font-bold mb-3"><i class="fa-solid fa-code text-teal-500"></i> 基于代码的 Evals</h3>
+                    <p class="text-gray-700"><strong>核心:</strong> 检查代码执行结果或 API 调用。</p>
+                    <p class="text-sm text-green-600 mt-2"><strong>优点:</strong> 快速、便宜、确定性强。</p>
+                    <p class="text-sm text-red-600 mt-1"><strong>缺点:</strong> 难以评估主观或开放式任务。</p>
+                </div>
+                <div class="flex-1 p-6 bg-white rounded-lg shadow-lg border-t-4 border-blue-400">
+                    <h3 class="text-xl font-bold mb-3"><i class="fa-solid fa-robot text-blue-500"></i> 基于 LLM 的 Evals</h3>
+                    <p class="text-gray-700"><strong>核心:</strong> 使用另一个 LLM 作为“裁判”来打分。</p>
+                    <p class="text-sm text-green-600 mt-2"><strong>优点:</strong> <b>可扩展性强</b>，能评估复杂任务。</p>
+                    <p class="text-sm text-red-600 mt-1"><strong>缺点:</strong> 需要初始校准，结果是概率性的。</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+        
+        <!-- Slide 6: AI Agent Eval Flow -->
+        <section class="p-8 md:p-12 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8"><i class="fa-solid fa-sitemap text-blue-500"></i> AI Agent 评估流程分解</h2>
+            <div class="max-w-2xl mx-auto">
+                <div class="p-3 bg-blue-100 border border-blue-300 rounded-lg text-center font-semibold mb-4">用户: “帮我订去旧金山的行程”</div>
+                <div class="space-y-2">
+                    <!-- Step 1 -->
+                    <div class="flex items-center text-left">
+                        <div class="w-1/3 bg-gray-100 p-3 rounded-l-lg border font-semibold">1. 工具选择</div>
+                        <div class="w-2/3 p-3 border rounded-r-lg bg-white"><span class="text-red-600 font-semibold">出错:</span> 调用错误工具 <br><span class="text-green-700 font-semibold">评估:</span> 工具选择 Eval <i class="fa-solid fa-star text-yellow-500"></i></div>
+                    </div>
+                    <div class="text-center text-2xl text-gray-400">&darr;</div>
+                    <!-- Step 2 -->
+                    <div class="flex items-center text-left">
+                        <div class="w-1/3 bg-gray-100 p-3 rounded-l-lg border font-semibold">2. API 搜索</div>
+                        <div class="w-2/3 p-3 border rounded-r-lg bg-white"><span class="text-red-600 font-semibold">出错:</span> 搜索指令错误 <br><span class="text-green-700 font-semibold">评估:</span> 函数调用 Eval</div>
+                    </div>
+                     <div class="text-center text-2xl text-gray-400">&darr;</div>
+                    <!-- Step 3 -->
+                    <div class="flex items-center text-left">
+                        <div class="w-1/3 bg-gray-100 p-3 rounded-l-lg border font-semibold">3. 上下文利用</div>
+                        <div class="w-2/3 p-3 border rounded-r-lg bg-white"><span class="text-red-600 font-semibold">出错:</span> 调用错误工具 <br><span class="text-green-700 font-semibold">评估:</span> RAG Eval <i class="fa-solid fa-star text-yellow-500"></i></div>
+                    </div>
+                     <div class="text-center text-2xl text-gray-400">&darr;</div>
+                    <!-- Step 4 -->
+                    <div class="flex items-center text-left">
+                        <div class="w-1/3 bg-gray-100 p-3 rounded-l-lg border font-semibold">4. 回复构建</div>
+                        <div class="w-2/3 p-3 border rounded-r-lg bg-white"><span class="text-red-600 font-semibold">出错:</span> 语气或内容不当 <br><span class="text-green-700 font-semibold">评估:</span> 语气 Eval <i class="fa-solid fa-star text-yellow-500"></i></div>
+                    </div>
+                     <div class="text-center text-2xl text-gray-400">&darr;</div>
+                    <!-- Step 5 -->
+                    <div class="flex items-center text-left">
+                        <div class="w-1/3 bg-gray-100 p-3 rounded-l-lg border font-semibold">5. 最终正确性</div>
+                        <div class="w-2/3 p-3 border rounded-r-lg bg-white"><span class="text-red-600 font-semibold">出错:</span> 整体方案错误 <br><span class="text-green-700 font-semibold">评估:</span> 正确性 Eval</div>
+                    </div>
+                </div>
+                <div class="p-3 bg-red-100 border border-red-300 rounded-lg text-center font-semibold mt-4">最终结果: 订了去圣地亚哥的票</div>
+            </div>
+            <p class="text-base text-gray-600 mt-6 max-w-3xl mx-auto">对AI决策的每个环节设立“质检站”（即各种Eval），是避免“差之毫厘，谬以千里”的关键。 <i class="fa-solid fa-star text-yellow-500"></i> 代表使用 LLM-as-a-judge 方法。</p>
+        </section>
+
+        <hr class="section-divider my-12">
+        
+        <!-- Slide 7: Common Eval Criteria -->
+        <section class="p-8 md:p-12 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-10"><i class="fa-solid fa-list-check text-blue-500"></i> 通用评估标准有哪些？</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
+                <div class="p-6 bg-gray-50 rounded-lg border-l-4 border-blue-500">
+                    <h3 class="font-bold text-xl text-blue-800 mb-2"><i class="fa-solid fa-ghost"></i> 幻觉 (Hallucination)</h3>
+                    <p>AI Agent 是准确利用了上下文，还是在凭空捏造？</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg border-l-4 border-red-500">
+                    <h3 class="font-bold text-xl text-red-800 mb-2"><i class="fa-solid fa-shield-halved"></i> 恶意/语气 (Toxicity/Tone)</h3>
+                    <p>输出是否包含有害或不当言论？</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg border-l-4 border-green-500">
+                    <h3 class="font-bold text-xl text-green-800 mb-2"><i class="fa-solid fa-check-double"></i> 总体正确性 (Overall Correctness)</h3>
+                    <p>系统在其核心目标上的表现如何？（如：问答准确率）</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg border-l-4 border-purple-500">
+                    <h3 class="font-bold text-xl text-purple-800 mb-2"><i class="fa-solid fa-plus"></i> 其他常见领域</h3>
+                    <p>代码生成、摘要质量、检索相关性等。</p>
+                </div>
+            </div>
+        </section>
+        
+        <hr class="section-divider my-12">
+        
+        <!-- Slide 10: Building an Eval from Scratch -->
+        <section class="p-8 md:p-12 text-center bg-gray-50">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6"><i class="fa-solid fa-wrench text-blue-500"></i> 如何从零构建一个 Eval？</h2>
+            <p class="text-xl text-gray-700 mb-10">这是一个持续改进的<span class="text-blue-600 font-bold">迭代</span>过程。</p>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                <div class="p-4 bg-white rounded-lg shadow-md flex flex-col items-center w-48 h-32 justify-center">
+                    <div class="text-3xl mb-2 text-blue-500"><i class="fa-solid fa-database"></i></div>
+                    <h4 class="font-semibold text-blue-800">1. 收集数据</h4>
+                </div>
+                <div class="text-4xl font-light text-gray-400">&rightarrow;</div>
+                <div class="p-4 bg-white rounded-lg shadow-md flex flex-col items-center w-48 h-32 justify-center">
+                    <div class="text-3xl mb-2 text-blue-500"><i class="fa-solid fa-vial"></i></div>
+                    <h4 class="font-semibold text-blue-800">2. 初步评估</h4>
+                </div>
+                <div class="text-4xl font-light text-gray-400">&rightarrow;</div>
+                <div class="p-4 bg-white rounded-lg shadow-md flex flex-col items-center w-48 h-32 justify-center">
+                    <div class="text-3xl mb-2 text-blue-500"><i class="fa-solid fa-sync-alt"></i></div>
+                    <h4 class="font-semibold text-blue-800">3. 迭代循环</h4>
+                </div>
+                <div class="text-4xl font-light text-gray-400">&rightarrow;</div>
+                <div class="p-4 bg-white rounded-lg shadow-md flex flex-col items-center w-48 h-32 justify-center">
+                    <div class="text-3xl mb-2 text-blue-500"><i class="fa-solid fa-chart-line"></i></div>
+                    <h4 class="font-semibold text-blue-800">4. 生产监控</h4>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+        
+        <!-- Slide 11: Stage 1 - Data Collection -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center"><i class="fa-solid fa-database text-blue-500"></i> 第一阶段：收集数据</h2>
+            <div class="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold text-gray-700 mb-4">核心任务</h3>
+                    <ul class="list-disc pl-5 space-y-3 text-gray-700 text-lg">
+                        <li><strong>收集真实用户交互：</strong> 捕获真实案例，例如用户留下的“赞/踩”反馈。</li>
+                        <li><strong>记录边缘案例：</strong> 识别特殊或意外行为，以及 AI 的异常响应。</li>
+                        <li><strong>构建代表性数据集：</strong> 整理成结构化数据集，初期准备 10-100 个带有人工标签的样本作为基准。</li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold text-gray-700 mb-4">数据表示例</h3>
+                    <div class="bg-white p-4 rounded-lg shadow-lg border">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">用户输入</th>
+                                    <th scope="col" class="px-6 py-3">AI 输出</th>
+                                    <th scope="col" class="px-6 py-3">人工标签</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4">"周末去旧金山"</td>
+                                    <td class="px-6 py-4">"预订圣地亚哥的票"</td>
+                                    <td class="px-6 py-4 font-bold text-red-600">错误</td>
+                                </tr>
+                                <tr class="bg-gray-50 border-b">
+                                    <td class="px-6 py-4">"最近的咖啡店"</td>
+                                    <td class="px-6 py-4">"500米外有星巴克"</td>
+                                    <td class="px-6 py-4 font-bold text-green-600">正确</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+
+        <!-- Slide 12: Stage 2 - Initial Assessment -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center"><i class="fa-solid fa-vial text-blue-500"></i> 第二阶段：初步评估</h2>
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-2xl border">
+                <p class="text-gray-700 mb-6 text-center text-xl">将 Eval 结果与人工标注的“真实答案”进行比较，确保评估标准的准确性。</p>
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-lg font-semibold text-gray-700">人工标注 (Ground Truth):</span>
+                        <div class="w-full bg-gray-200 rounded-full h-8 mt-2 shadow-inner">
+                            <div class="bg-blue-600 h-8 rounded-full text-center text-white font-bold text-lg leading-8" style="width: 100%;">100 案例</div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-lg font-semibold text-gray-700">LLM-based Eval 结果:</span>
+                        <div class="w-full bg-gray-200 rounded-full h-8 mt-2 flex shadow-inner">
+                            <div class="bg-green-500 h-8 rounded-l-full text-center text-white text-lg leading-8 flex items-center justify-center" style="width: 92%"><i class="fa-solid fa-check mr-2"></i>92 匹配</div>
+                            <div class="bg-red-500 h-8 rounded-r-full text-center text-white text-lg leading-8 flex items-center justify-center" style="width: 8%"><i class="fa-solid fa-xmark mr-2"></i>8 </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center mt-8 font-bold text-2xl text-green-700">初始准确率: 92%</p>
+                <p class="text-center text-gray-600 mt-2">目标: >98%。下一步是分析 8 个错误案例，优化 Eval Prompt。</p>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+
+        <!-- Slide 13: Stage 3 - Iteration Loop -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center"><i class="fa-solid fa-sync-alt text-blue-500"></i> 第三阶段：迭代循环</h2>
+            <div class="max-w-7xl mx-auto">
+                <p class="text-center text-xl text-gray-600 mb-12">流程详解（按顺时针方向）</p>
+                <div class="relative grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 gap-x-8 gap-y-12 items-center">
+                    <!-- Centerpiece -->
+                    <div class="md:col-start-2 md:row-start-2 flex justify-center items-center">
+                        <div class="w-48 h-48 bg-blue-50 border-2 border-dashed border-blue-200 text-blue-800 rounded-full flex flex-col justify-center items-center text-center p-4 shadow-inner">
+                            <i class="fa-solid fa-arrows-spin text-4xl mb-2"></i>
+                            <h4 class="font-bold text-lg">持续改进循环</h4>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Collect Data -->
+                    <div class="md:col-start-1 md:row-start-1 text-center p-4 bg-white rounded-lg shadow-lg border">
+                        <i class="fa-solid fa-chart-column text-3xl text-blue-500 mb-2"></i>
+                        <h4 class="font-bold">1. 收集生产数据</h4>
+                        <p class="text-sm text-gray-600">从线上真实服务的AI模型中，收集实际的交互数据，反映真实世界表现。</p>
+                    </div>
+
+                    <!-- Step 2: Add Labels -->
+                    <div class="md:col-start-2 md:row-start-1 text-center p-4 bg-white rounded-lg shadow-lg border">
+                        <i class="fa-solid fa-tag text-3xl text-teal-500 mb-2"></i>
+                        <h4 class="font-bold">2. 添加人工标注</h4>
+                        <p class="text-sm text-gray-600">人工审查和分类数据，例如标注正确、错误、或有害的AI回答。</p>
+                    </div>
+
+                    <!-- Step 3: Create Failure Dataset -->
+                    <div class="md:col-start-3 md:row-start-1 text-center p-4 bg-white rounded-lg shadow-lg border">
+                        <i class="fa-solid fa-wrench text-3xl text-red-500 mb-2"></i>
+                        <h4 class="font-bold">3. 创建失败模式数据集</h4>
+                        <p class="text-sm text-gray-600">将AI“犯错”的案例整理归类，形成专门的数据集，作为改进的靶心。</p>
+                    </div>
+
+                    <!-- Step 4: Write Eval -->
+                    <div class="md:col-start-3 md:row-start-2 text-center p-4 bg-white rounded-lg shadow-lg border">
+                        <i class="fa-solid fa-pencil text-3xl text-purple-500 mb-2"></i>
+                        <h4 class="font-bold">4. 编写你的评估方案</h4>
+                        <p class="text-sm text-gray-600">针对失败模式设计和编写具体的评估方案（Eval），以稳定检测特定错误。</p>
+                    </div>
+
+                    <!-- Step 5: Test Eval -->
+                    <div class="md:col-start-2 md:row-start-3 text-center p-4 bg-white rounded-lg shadow-lg border">
+                        <i class="fa-solid fa-list-check text-3xl text-yellow-500 mb-2"></i>
+                        <h4 class="font-bold">5. 在数据集上测试评估方案</h4>
+                        <p class="text-sm text-gray-600">先用Eval测试已知的失败数据集，确保你的Eval本身是有效的、可靠的。</p>
+                    </div>
+                    
+                    <!-- Step 6: Iterate on Agent + Eval -->
+                    <div class="md:col-start-1 md:row-start-2 text-center p-4 bg-white rounded-lg shadow-lg border">
+                        <i class="fa-solid fa-arrows-rotate text-3xl text-green-500 mb-2"></i>
+                        <h4 class="font-bold">6. 迭代你的智能体和评估方案</h4>
+                        <p class="text-sm text-gray-600">利用Eval结果找出弱点，修复问题，并同步优化评估方案。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+
+        <!-- Slide 14: Stage 4 - Production Monitoring -->
+        <section class="p-8 md:p-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center"><i class="fa-solid fa-chart-line text-blue-500"></i> 第四阶段：生产环境监控</h2>
+            <div class="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold text-gray-700 mb-4">持续改进</h3>
+                    <ul class="list-disc pl-5 space-y-3 text-gray-700 text-lg">
+                        <li><strong>持续评估：</strong> 设置自动化流程，让 Evals 在实时用户交互中持续运行。</li>
+                        <li><strong>对比真实反馈：</strong> 寻找评估结果与真实世界表现之间的差异。</li>
+                        <li><strong>构建可指导行动的仪表盘：</strong> 将 AI 性能指标与业务成果挂钩。</li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white rounded-xl shadow-2xl p-6 border">
+                        <h4 class="font-bold text-gray-800 text-lg mb-4">AI 性能仪表盘</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="font-semibold">幻觉率 (最近24小时)</p>
+                                <div class="flex items-center">
+                                    <p class="text-2xl font-bold text-red-600">2.1%</p>
+                                    <i class="fa-solid fa-arrow-up text-red-500 ml-2"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-semibold">用户满意度 (👍/👎)</p>
+                                 <div class="flex items-center">
+                                    <p class="text-2xl font-bold text-green-600">95%</p>
+                                    <i class="fa-solid fa-down text-green-500 ml-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+
+        <!-- Slide 15: Mistakes to Avoid -->
+        <section class="p-8 md:p-12 bg-red-50">
+            <h2 class="text-3xl font-bold text-red-800 mb-8 text-center"><i class="fa-solid fa-triangle-exclamation"></i> Evals 设计要避免哪些错误？</h2>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="flex items-start p-4 bg-white rounded-lg shadow">
+                    <i class="fa-solid fa-xmark text-red-500 text-2xl mr-4 mt-1"></i>
+                    <div>
+                        <h3 class="font-bold">起步时设计得过于复杂</h3>
+                        <p class="text-gray-600">会产生“噪音”信号，应先专注于具体输出。</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-4 bg-white rounded-lg shadow">
+                    <i class="fa-solid fa-xmark text-red-500 text-2xl mr-4 mt-1"></i>
+                    <div>
+                        <h3 class="font-bold">不测试边缘案例</h3>
+                        <p class="text-gray-600">使用小样本提示可以显著提升性能。</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-4 bg-white rounded-lg shadow">
+                    <i class="fa-solid fa-xmark text-red-500 text-2xl mr-4 mt-1"></i>
+                    <div>
+                        <h3 class="font-bold">忘记用真实用户反馈来验证</h3>
+                        <p class="text-gray-600">最终目标是解决用户的问题。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+
+        <!-- Slide 16: Quick Start -->
+        <section class="p-8 md:p-12 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8"><i class="fa-solid fa-play text-blue-500"></i> 快速上手评估：三步走</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                <div class="p-6 bg-blue-50 rounded-lg shadow-md text-center w-60">
+                    <h3 class="font-bold text-lg">1. 选择一个关键特性</h3>
+                    <p class="text-gray-600 mt-1">例如“幻觉检测”</p>
+                </div>
+                <div class="text-4xl font-light text-gray-400">&rightarrow;</div>
+                 <div class="p-6 bg-blue-50 rounded-lg shadow-md text-center w-60">
+                    <h3 class="font-bold text-lg">2. 编写简单 Eval</h3>
+                    <p class="text-gray-600 mt-1">在 5-10 个真实案例上运行</p>
+                </div>
+                <div class="text-4xl font-light text-gray-400">&rightarrow;</div>
+                <div class="p-6 bg-blue-50 rounded-lg shadow-md text-center w-60">
+                    <h3 class="font-bold text-lg">3. 复盘并迭代</h3>
+                    <p class="text-gray-600 mt-1">不断优化直到准确率达标</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-12">
+        
+        <!-- Slide 17: Summary -->
+        <section class="p-8 md:p-16 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">总结</h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto">Evals 不仅是为了发现 bug，更是为了确保你的 AI 系统能够持续创造价值，赢得用户的喜爱。</p>
+            <p class="text-2xl font-bold text-blue-600 mt-6 max-w-3xl mx-auto">Evals 是生成式 AI 从原型走向成熟产品的关键一步。</p>
+            <i class="fa-solid fa-award text-6xl text-yellow-500 mt-8"></i>
+        </section>
+
+    </main>
+</body>
+</html>
